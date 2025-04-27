@@ -18,4 +18,5 @@ export * from './Form/switch';
 export * from './Form/textarea';
 export * from './Form/uploder';
 export * from './Form/factory';
-export * from './Form/index'
+export * from './Form/index';
+export * from './Descriptions';
