@@ -1,0 +1,68 @@
+{
+  "name": "@codingapi/form-pc",
+  "version": "0.0.1",
+  "description": "A UI Framework built with React and Typescript",
+  "keywords": [
+    "ui",
+    "framework",
+    "react",
+    "typescript"
+  ],
+  "homepage": "https://github.com/codingapi/form-pc",
+  "bugs": {
+    "url": "https://github.com/codingapi/form-pc/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codingapi/form-pc.git"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@codingapi/ui-framework": "^0.0.8",
+    "antd": "^5.24.8",
+    "monaco-editor": "^0.52.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.6.2"
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "yarn clean && rollup -c --bundleConfigAsCjs",
+    "push": "yarn build && yarn publish --access public"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@rollup/plugin-alias": "^5.1.1",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "postcss": "^8.4.32",
+    "rollup": "^4.9.1",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript2": "^0.36.0"
+  }
+}
