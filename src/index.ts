@@ -1,3 +1,5 @@
+import './Form/index.scss';
+
 export * from './Form/captcha';
 export * from './Form/cascader';
 export * from './Form/checkbox';

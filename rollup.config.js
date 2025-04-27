@@ -48,10 +48,14 @@ export default {
     }),
     postcss({
       extract: false,
-      modules: true,
+      modules: {
+        generateScopedName: '[name]__[local]___[hash:base64:5]',
+      },
       use: ['sass'],
       minimize: true,
-      inject: true,
+      inject: {
+        insertAt: 'top',
+      },
     }),
   ],
 };
