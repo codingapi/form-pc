@@ -72,7 +72,7 @@ type FormComponentType = FormType & {
     useForm: ()=>FormInstance;
 };
 
-const Form = FormComponent as FormComponentType;
+export const Form = FormComponent as FormComponentType;
 Form.useForm = ()=>{
     AntdForm.getInstance().registerForm({
         useForm(): AntdFormInstance {
@@ -82,5 +82,3 @@ Form.useForm = ()=>{
     })
     return new FormInstance();
 };
-
-export default Form;
