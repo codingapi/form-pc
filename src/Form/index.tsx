@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {FormField, FormInstance, AntdForm, AntdFormInstance} from "@codingapi/ui-framework";
 import {Form as AntForm} from "antd";
-import {FormFactory} from "./factory";
+import {FormFactory,FormContext} from "./factory";
 import "./index.css";
 
 export interface FormProps {
@@ -20,9 +20,6 @@ export interface FormProps {
     // 表单实例
     form?: FormInstance;
 }
-
-export const FormContext = React.createContext<FormInstance | null>(null);
-
 
 const FormComponent: React.FC<FormProps> = (props) => {
 

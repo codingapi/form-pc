@@ -1,5 +1,5 @@
 import React from "react";
-import {FormField} from "@codingapi/ui-framework";
+import {FormField, FormInstance} from "@codingapi/ui-framework";
 import {FormInput} from "./input";
 import {FormPassword} from "./password";
 import {FormCaptcha} from "./captcha";
@@ -179,4 +179,6 @@ export class FormFactory {
     }
 
 }
+
+export const FormContext = React.createContext<FormInstance | null>(null);
 
