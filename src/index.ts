@@ -14,5 +14,6 @@ export * from './Form/slider';
 export * from './Form/stepper';
 export * from './Form/switch';
 export * from './Form/textarea';
+export * from './Form/uploder';
 export * from './Form/factory';
 export * from './Form/index'
