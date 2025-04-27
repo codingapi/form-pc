@@ -1,5 +1,5 @@
 import React from "react";
-import {FormField, FormInstance} from "@codingapi/ui-framework";
+import {FormField} from "@codingapi/ui-framework";
 import {FormInput} from "./input";
 import {FormPassword} from "./password";
 import {FormCaptcha} from "./captcha";
@@ -18,9 +18,7 @@ import {FormUploader} from "./uploder";
 import {FormColor} from "./color";
 import {FormCode} from "./code";
 
-
 export class FormFactory {
-
     static create = (field: FormField) => {
         const type = field.type;
         const props = field.props;
@@ -177,8 +175,5 @@ export class FormFactory {
             )
         }
     }
-
 }
-
-export const FormContext = React.createContext<FormInstance | null>(null);
 

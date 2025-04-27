@@ -2,7 +2,7 @@ import React from "react";
 import {FormItemProps} from "@codingapi/ui-framework";
 import {Form, Rate} from "antd";
 import formFieldInit from "./common";
-import "./index.css";
+import "./index.scss";
 
 export const FormRate: React.FC<FormItemProps> = (props) => {
     const {formContext} = formFieldInit(props);

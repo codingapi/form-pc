@@ -2,8 +2,8 @@ import React from "react";
 import {FormItemProps} from "@codingapi/ui-framework";
 import {Form} from "antd";
 import formFieldInit from "./common";
-import "./index.css";
 import {CodeEditor} from "../CodeEditor";
+import "./index.scss";
 
 
 export const FormCode: React.FC<FormItemProps> = (props) => {

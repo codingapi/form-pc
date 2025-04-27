@@ -2,7 +2,7 @@ import React from "react";
 import {FormItemProps} from "@codingapi/ui-framework";
 import {Form, Slider} from "antd";
 import formFieldInit from "./common";
-import "./index.css";
+import "./index.scss";
 
 export const FormSlider: React.FC<FormItemProps> = (props) => {
 

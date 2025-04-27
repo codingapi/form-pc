@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {FormItemProps} from "@codingapi/ui-framework";
 import {Form, Input} from "antd";
 import formFieldInit from "./common";
-import "./index.css";
+import "./index.scss";
 
 
 const Captcha:React.FC<FormItemProps> = (props)=>{
@@ -34,10 +34,10 @@ const Captcha:React.FC<FormItemProps> = (props)=>{
                 prefix={props.prefix}
                 suffix={props.suffix}
                 placeholder={props.placeholder}
-                onChange={(value) => {
-                    const currentValue = value.target.value;
+                onChange={(e) => {
+                    const currentValue = e.target.value;
                     props.name && formContext?.setFieldValue(props.name, currentValue);
-                    props.onChange && props.onChange(currentValue,formContext);
+                    props.onChange && props.onChange(currentValue, formContext);
                 }}
             />
 

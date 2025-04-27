@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
-import {FormContext} from "./factory";
 import {FormItemProps} from "@codingapi/ui-framework";
+import {FormContext} from "./context";
 
-const formFieldInit = (props: FormItemProps,reloadOption?:()=>void) => {
+const formFieldInit = (props: FormItemProps, reloadOption?: () => void) => {
     const formContext = React.useContext(FormContext) || undefined;
     const formAction = formContext?.getFormAction();
     const validateContext = formContext?.getFormValidateContext();

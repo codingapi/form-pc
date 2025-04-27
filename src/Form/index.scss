@@ -4,6 +4,7 @@
   align-items: center;
 
   .form-captcha-input {
+    flex: 1;
   }
 
   .form-captcha-img {
@@ -11,4 +12,4 @@
     cursor: pointer;
     height: 30px;
   }
-}
+} 

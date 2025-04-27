@@ -1,8 +1,9 @@
 import React, {useEffect} from "react";
 import {FormField, FormInstance, AntdForm, AntdFormInstance} from "@codingapi/ui-framework";
 import {Form as AntForm} from "antd";
-import {FormFactory,FormContext} from "./factory";
-import "./index.css";
+import {FormFactory} from "./factory";
+import {FormContext} from "./context";
+import "./index.scss";
 
 export interface FormProps {
     // 表单字段

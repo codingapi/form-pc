@@ -5,7 +5,7 @@ import formFieldInit from "./common";
 import {PlusOutlined, UploadOutlined} from "@ant-design/icons";
 import {RcFile} from "antd/es/upload";
 import {UploadFile} from "antd/lib";
-import "./index.css";
+import "./index.scss";
 
 const fileToBase64 = (file: RcFile): Promise<string> => {
     return new Promise((resolve, reject) => {

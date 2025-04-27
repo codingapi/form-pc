@@ -1,7 +1,7 @@
 {
   "name": "@codingapi/form-pc",
-  "version": "0.0.8",
-  "description": "A UI Framework built with React and Typescript",
+  "version": "0.0.13",
+  "description": "A UI Framework built with React and TypeScript",
   "keywords": [
     "ui",
     "framework",
@@ -18,17 +18,26 @@
   },
   "main": "dist/index.js",
   "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "license": "Apache-2.0",
   "files": [
     "dist"
   ],
+  "peerDependencies": {
+    "antd": "^4.0.0 || ^5.0.0",
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  },
   "dependencies": {
-    "@codingapi/ui-framework": "^0.0.9",
-    "antd": "^5.24.8",
-    "monaco-editor": "^0.52.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "typescript": "^5.6.2"
+    "@codingapi/ui-framework": "^0.0.11",
+    "monaco-editor": "^0.52.2"
   },
   "scripts": {
     "clean": "rm -rf dist",
@@ -58,11 +67,14 @@
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
+    "antd": "^5.24.8",
     "postcss": "^8.4.32",
     "rollup": "^4.9.1",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-typescript2": "^0.36.0"
+    "rollup-plugin-typescript2": "^0.36.0",
+    "sass": "^1.87.0",
+    "typescript": "^5.6.2"
   }
 }

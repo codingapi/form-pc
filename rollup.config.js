@@ -8,29 +8,50 @@ import pkg from './package.json';
 
 export default {
   input: 'src/index.ts',
+  inlineDynamicImports: true,
+  external: [
+    'react',
+    'react-dom',
+    'antd',
+    '@codingapi/ui-framework',
+    'monaco-editor',
+  ],
   output: [
     {
-      dir: 'dist/cjs',
+      dir: 'dist',
       format: 'cjs',
       sourcemap: true,
-      entryFileNames: '[name].js',
+      entryFileNames: 'index.js',
+      exports: 'named',
+      preserveModules: false,
     },
     {
-      dir: 'dist/esm',
+      dir: 'dist',
       format: 'esm',
       sourcemap: true,
-      entryFileNames: '[name].js',
+      entryFileNames: 'index.es.js',
+      exports: 'named',
+      preserveModules: false,
     },
   ],
   plugins: [
     del({ targets: 'dist/*' }),
     peerDepsExternal(),
-    resolve(),
+    resolve({
+      preferBuiltins: true,
+    }),
     commonjs(),
     typescript({
-      tsconfig: 'tsconfig.build.json',
+      tsconfig: 'tsconfig.json',
       useTsconfigDeclarationDir: true,
+      clean: true,
     }),
-    postcss(),
+    postcss({
+      extract: false,
+      modules: true,
+      use: ['sass'],
+      minimize: true,
+      inject: true,
+    }),
   ],
 };

@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {FormItemProps} from "@codingapi/ui-framework";
 import {Form, Radio, Space} from "antd";
 import formFieldInit from "./common";
-import "./index.css";
+import "./index.scss";
 
 export const FormRadio: React.FC<FormItemProps> = (props) => {
     const [options, setOptions] = React.useState(props.options);

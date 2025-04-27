@@ -2,8 +2,8 @@ import React from "react";
 import {FormItemProps,FormInstance} from "@codingapi/ui-framework";
 import {ColorPicker, Form, Space} from "antd";
 import formFieldInit from "./common";
-import "./index.css";
 import type {AggregationColor} from "antd/es/color-picker/color";
+import "./index.scss";
 
 const formToValue = (value: AggregationColor) => {
     if (value) {
