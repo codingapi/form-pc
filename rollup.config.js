@@ -10,14 +10,16 @@ export default {
   input: 'src/index.ts',
   output: [
     {
-      file: pkg.main,
+      dir: 'dist/cjs',
       format: 'cjs',
       sourcemap: true,
+      entryFileNames: '[name].js',
     },
     {
-      file: pkg.module,
+      dir: 'dist/esm',
       format: 'esm',
       sourcemap: true,
+      entryFileNames: '[name].js',
     },
   ],
   plugins: [
