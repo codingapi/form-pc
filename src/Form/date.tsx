@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {FormItemProps,FormInstance} from "@codingapi/ui-framework";
 import {DatePicker, Form, Space} from "antd";
 import dayjs from "dayjs";
@@ -105,6 +105,15 @@ const $DatePicker:React.FC<$DatePicker> = (props)=>{
 export const FormDate: React.FC<FormItemProps> = (props) => {
 
     const {formContext} = formFieldInit(props);
+
+    useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'date',
+                props: props
+            }
+        );
+    }, []);
 
     return (
         <Form.Item

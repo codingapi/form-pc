@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {FormItemProps,FormInstance} from "@codingapi/ui-framework";
 import {ColorPicker, Form, Space} from "antd";
 import formFieldInit from "./common";
@@ -43,6 +43,15 @@ const $ColorPicker:React.FC<$ColorPickerProps> = (props)=>{
 export const FormColor: React.FC<FormItemProps> = (props) => {
 
     const {formContext} = formFieldInit(props);
+
+    useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'color',
+                props: props
+            }
+        );
+    }, []);
 
     return (
         <Form.Item

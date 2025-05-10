@@ -145,6 +145,16 @@ interface UploaderProps extends FormItemProps {
 export const FormUploader: React.FC<FormItemProps> = (props) => {
     const {formContext} = formFieldInit(props);
     const accept = props.uploaderAccept || "image/*";
+
+    useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'uploader',
+                props: props
+            }
+        );
+    }, []);
+
     return (
         <Form.Item
             name={props.name}

@@ -20,6 +20,12 @@ export const FormRadio: React.FC<FormItemProps> = (props) => {
     }
 
     useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'radio',
+                props: props
+            }
+        );
         reloadOptions();
     }, []);
 

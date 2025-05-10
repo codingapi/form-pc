@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {FormItemProps} from "@codingapi/ui-framework";
 import {Form, Switch as AntSwitch, SwitchProps as AntdSwitchProps} from "antd";
 import formFieldInit from "./common";
@@ -17,6 +17,15 @@ const Switch: React.FC<SwitchProps> = ({value, ...props}) => {
 export const FormSwitch: React.FC<FormItemProps> = (props) => {
 
     const {formContext} = formFieldInit(props);
+
+    useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'switch',
+                props: props
+            }
+        );
+    }, []);
 
     return (
         <Form.Item

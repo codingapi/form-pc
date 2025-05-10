@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {FormItemProps} from "@codingapi/ui-framework";
 import {Form} from "antd";
 import formFieldInit from "./common";
@@ -9,6 +9,16 @@ import "./index.scss";
 export const FormCode: React.FC<FormItemProps> = (props) => {
 
     const {formContext} = formFieldInit(props);
+
+    useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'code',
+                props: props
+            }
+        );
+    }, []);
+
 
     return (
         <Form.Item

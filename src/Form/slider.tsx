@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {FormItemProps} from "@codingapi/ui-framework";
 import {Form, Slider} from "antd";
 import formFieldInit from "./common";
@@ -7,6 +7,15 @@ import "./index.scss";
 export const FormSlider: React.FC<FormItemProps> = (props) => {
 
     const {formContext} = formFieldInit(props);
+
+    useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'slider',
+                props: props
+            }
+        );
+    }, []);
 
     return (
         <Form.Item

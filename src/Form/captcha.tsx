@@ -5,14 +5,14 @@ import formFieldInit from "./common";
 import "./index.scss";
 
 
-const Captcha:React.FC<FormItemProps> = (props)=>{
+const Captcha: React.FC<FormItemProps> = (props) => {
 
     const [captchaImg, setCaptchaImg] = useState<string>('');
     const {formContext} = formFieldInit(props);
 
     const reloadCaptcha = () => {
         props.onCaptchaRefresh && props.onCaptchaRefresh().then((res) => {
-            if(res) {
+            if (res) {
                 setCaptchaImg(res.url);
                 props.onCaptchaChange && props.onCaptchaChange(res.code);
             }
@@ -55,6 +55,17 @@ const Captcha:React.FC<FormItemProps> = (props)=>{
 
 
 export const FormCaptcha: React.FC<FormItemProps> = (props) => {
+    const {formContext} = formFieldInit(props);
+
+    useEffect(() => {
+        formContext?.addFormField(
+            {
+                type: 'captcha',
+                props: props
+            }
+        );
+    }, []);
+
 
     return (
         <Form.Item

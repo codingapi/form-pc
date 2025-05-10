@@ -34,6 +34,10 @@ export const FormCheckbox: React.FC<FormItemProps> = (props) => {
     }
 
     useEffect(() => {
+        formContext?.addFormField({
+            type: "checkbox",
+            props: props
+        });
         reloadOptions();
     }, []);
 
