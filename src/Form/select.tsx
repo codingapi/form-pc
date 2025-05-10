@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {FormItemProps,FormInstance} from "@codingapi/ui-framework";
+import {FormInstance, FormItemProps} from "@codingapi/ui-framework";
 import {Form, Select, Space} from "antd";
 import formFieldInit from "./common";
 import "./index.scss";
@@ -11,8 +11,8 @@ const valueToForm = (value: string) => {
     return value;
 }
 
-const formToValue = (value: string[] |string) => {
-    if(value instanceof Array) {
+const formToValue = (value: string[] | string) => {
+    if (value instanceof Array) {
         if (value && value.length > 0) {
             return value.join(",")
         }
@@ -20,35 +20,62 @@ const formToValue = (value: string[] |string) => {
     return value;
 }
 
-interface $SelectProps extends FormItemProps{
-    formInstance?:FormInstance;
+interface $SelectProps extends FormItemProps {
+    formInstance?: FormInstance;
+}
+
+const SelectView: React.FC<$SelectProps> = (props) => {
+    const formInstance = props.formInstance;
+    return (
+        <Select
+            prefix={props.prefix}
+            suffixIcon={props.suffix}
+            disabled={props.disabled}
+            value={props.value}
+            mode={props.selectMultiple ? "multiple" : undefined}
+            placeholder={props.placeholder}
+            showSearch={true}
+            options={props.options}
+            onChange={(value, option) => {
+                props.name && formInstance?.setFieldValue(props.name, formToValue(value as string[]));
+                props.onChange && props.onChange(value, formInstance);
+            }}
+            {...props.itemProps}
+        />
+    )
+}
+
+
+const TreeView: React.FC<$SelectProps> = (props) => {
+
+    return (
+        <></>
+    )
 }
 
 const $Select: React.FC<$SelectProps> = (props) => {
-    const formInstance = props.formInstance;
+
+    const options = props.options;
+
+    const isTree = false;
 
     return (
         <Space.Compact
             style={{
-                width:"100%"
+                width: "100%"
             }}
         >
             {props.addonBefore}
-            <Select
-                prefix={props.prefix}
-                suffixIcon={props.suffix}
-                disabled={props.disabled}
-                value={props.value}
-                mode={props.selectMultiple ? "multiple" : undefined}
-                placeholder={props.placeholder}
-                showSearch={true}
-                options={props.options}
-                onChange={(value,option) => {
-                    props.name && formInstance?.setFieldValue(props.name, formToValue(value as string[]));
-                    props.onChange && props.onChange(value, formInstance);
-                }}
-                {...props.itemProps}
-            />
+            {isTree && (
+                <TreeView
+                    {...props}
+                />
+            )}
+            {!isTree && (
+                <SelectView
+                    {...props}
+                />
+            )}
             {props.addonAfter}
         </Space.Compact>
     )

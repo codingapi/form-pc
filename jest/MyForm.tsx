@@ -1,4 +1,4 @@
-import {Form, FormInput} from "../src";
+import {Form, FormInput, FormSelect} from "../src";
 import {Button} from "antd";
 import React from "react";
 import {ValidateUtils} from "@codingapi/ui-framework";
@@ -19,6 +19,35 @@ const MyForm = () => {
                     name={"test"}
                     label={"test"}
                     validateFunction={ValidateUtils.validateNotEmpty}
+                />
+
+                <FormSelect
+                    name={"select"}
+                    label={"select"}
+                    options={[
+                        {
+                            label: "option1",
+                            value: "option1",
+                            children:[
+                                {
+                                    label: "option1-1",
+                                    value: "option1-1"
+                                },
+                                {
+                                    label: "option1-2",
+                                    value: "option1-2"
+                                }
+                            ]
+                        },
+                        {
+                            label: "option2",
+                            value: "option2"
+                        },
+                        {
+                            label: "option3",
+                            value: "option3"
+                        }
+                    ]}
                 />
             </Form>
 
