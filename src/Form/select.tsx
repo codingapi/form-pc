@@ -47,6 +47,7 @@ const $Select: React.FC<$SelectProps> = (props) => {
                     props.name && formInstance?.setFieldValue(props.name, formToValue(value as string[]));
                     props.onChange && props.onChange(value, formInstance);
                 }}
+                {...props.itemProps}
             />
             {props.addonAfter}
         </Space.Compact>

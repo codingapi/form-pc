@@ -23,6 +23,7 @@ interface CodeEditorProps {
     theme?: string;
     fontSize?: number;
     actionRef?: Ref<CodeEditorAction>;
+    editorProps?:any;
 }
 
 
@@ -97,6 +98,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = (props) => {
                 fontSize: fontSize,
                 theme: theme,
                 readOnly: props.readonly,
+                ...props.editorProps
             },
         );
 

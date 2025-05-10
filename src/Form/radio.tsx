@@ -46,6 +46,7 @@ export const FormRadio: React.FC<FormItemProps> = (props) => {
                     props.name && formContext?.setFieldValue(props.name, currentValue);
                     props.onChange && props.onChange(currentValue, formContext);
                 }}
+                {...props.itemProps}
             >
                 <Space direction={props.radioDirection}>
                     {options?.map((item,index) => {

@@ -42,6 +42,7 @@ export const FormCode: React.FC<FormItemProps> = (props) => {
                 style={props.codeStyle}
                 actionRef={props.codeActionRef}
                 onSelectedRun={props.onCodeSelectedRun}
+                editorProps={props.itemProps}
             />
         </Form.Item>
     )

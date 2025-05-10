@@ -34,6 +34,7 @@ const $ColorPicker:React.FC<$ColorPickerProps> = (props)=>{
                    props.name && formInstance?.setFieldValue(props.name, currentValue);
                    props.onChange && props.onChange(currentValue, formInstance);
                }}
+               {...props.itemProps}
            />
            {props.addonAfter}
        </Space.Compact>

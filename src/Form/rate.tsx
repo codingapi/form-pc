@@ -34,6 +34,7 @@ export const FormRate: React.FC<FormItemProps> = (props) => {
                     props.name && formContext?.setFieldValue(props.name, value);
                     props.onChange && props.onChange(value, formContext);
                 }}
+                {...props.itemProps}
             />
         </Form.Item>
     )

@@ -96,6 +96,7 @@ const $DatePicker:React.FC<$DatePicker> = (props)=>{
                   props.name && formInstance?.setFieldValue(props.name, currentDate);
                   props.onChange && props.onChange(currentDate, formInstance);
               }}
+              {...props.itemProps}
           />
           {props.addonAfter}
       </Space.Compact>

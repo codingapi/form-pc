@@ -95,6 +95,7 @@ export const FormSelector: React.FC<FormItemProps> = (props) => {
                 }
                 return value
             }}
+            {...props.itemProps}
         >
             <$Selector
                 {...props}

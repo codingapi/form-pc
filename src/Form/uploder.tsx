@@ -117,6 +117,7 @@ interface UploaderProps extends FormItemProps {
                     setFileList(fileList);
                 }}
                 onPreview={isImage ? handlePreview : undefined}
+                {...props.itemProps}
             >
                 {isImage && (
                     <PlusOutlined/>

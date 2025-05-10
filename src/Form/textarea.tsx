@@ -38,6 +38,7 @@ export const FormTextArea: React.FC<FormItemProps> = (props) => {
                     props.name && formContext?.setFieldValue(props.name, currentValue);
                     props.onChange && props.onChange(currentValue, formContext);
                 }}
+                {...props.itemProps}
             />
         </Form.Item>
     )

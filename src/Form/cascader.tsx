@@ -44,6 +44,7 @@ const $Cascader:React.FC<$CascaderProps> = (props)=>{
                    props.name && formInstance?.setFieldValue(props.name, formToValue(value as string[]));
                    props.onChange && props.onChange(value, formInstance);
                }}
+               {...props.itemProps}
            />
            {props.addonAfter}
        </Space.Compact>

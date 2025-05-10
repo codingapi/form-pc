@@ -65,6 +65,7 @@ export const FormCheckbox: React.FC<FormItemProps> = (props) => {
                     props.name && formContext?.setFieldValue(props.name, formToValue(e as string[]));
                     props.onChange && props.onChange(e, formContext)
                 }}
+                {...props.itemProps}
             >
                 <Space direction={props.checkboxDirection}>
                     {options?.map((item,index) => {

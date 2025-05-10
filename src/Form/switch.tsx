@@ -10,7 +10,10 @@ interface SwitchProps extends AntdSwitchProps {
 
 const Switch: React.FC<SwitchProps> = ({value, ...props}) => {
     return (
-        <AntSwitch checked={value} {...props}/>
+        <AntSwitch
+            checked={value}
+            {...props}
+        />
     )
 }
 
@@ -45,6 +48,7 @@ export const FormSwitch: React.FC<FormItemProps> = (props) => {
                     props.name && formContext?.setFieldValue(props.name, value);
                     props.onChange && props.onChange(value, formContext);
                 }}
+                {...props.itemProps}
             />
         </Form.Item>
     )
