@@ -4,8 +4,11 @@ import {Cascader, Form, Space} from "antd";
 import formFieldInit from "./common";
 import "./index.scss";
 
-const valueToForm = (value: string) => {
+const valueToForm = (value: string|string[]) => {
     if (value && value.length > 0) {
+        if(Array.isArray(value)) {
+            return value;
+        }
         return value.split(",");
     }
     return value;
