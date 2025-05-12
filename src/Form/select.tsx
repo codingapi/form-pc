@@ -4,7 +4,10 @@ import {Form, Select, Space, TreeSelect} from "antd";
 import formFieldInit from "./common";
 import "./index.scss";
 
-const valueToForm = (value: string) => {
+const valueToForm = (value: string | string[]) => {
+    if (value instanceof Array) {
+        return value;
+    }
     if (value && value.length > 0) {
         return value.split(",");
     }
@@ -51,7 +54,7 @@ const TreeView: React.FC<$SelectProps> = (props) => {
         <TreeSelect
             prefix={props.prefix}
             suffixIcon={props.suffix}
-            disabled={!props.disabled}
+            disabled={props.disabled}
             value={props.value}
             multiple={props.selectMultiple}
             placeholder={props.placeholder}
@@ -68,8 +71,8 @@ const TreeView: React.FC<$SelectProps> = (props) => {
 
 const $Select: React.FC<$SelectProps> = (props) => {
 
-    const isTree = useMemo(()=>{
-        if(props.options){
+    const isTree = useMemo(() => {
+        if (props.options) {
             const options = props.options;
             for (const option of options) {
                 if (option.children && option.children.length > 0) {
@@ -78,7 +81,7 @@ const $Select: React.FC<$SelectProps> = (props) => {
             }
         }
         return false;
-    },[props.options]);
+    }, [props.options]);
 
     return (
         <Space.Compact
