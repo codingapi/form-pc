@@ -1,6 +1,6 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo} from "react";
 import {FormInstance, FormItemProps} from "@codingapi/ui-framework";
-import {Form, Select, Space} from "antd";
+import {Form, Select, Space, TreeSelect} from "antd";
 import formFieldInit from "./common";
 import "./index.scss";
 
@@ -47,17 +47,38 @@ const SelectView: React.FC<$SelectProps> = (props) => {
 
 
 const TreeView: React.FC<$SelectProps> = (props) => {
-
     return (
-        <></>
+        <TreeSelect
+            prefix={props.prefix}
+            suffixIcon={props.suffix}
+            disabled={!props.disabled}
+            value={props.value}
+            multiple={props.selectMultiple}
+            placeholder={props.placeholder}
+            showSearch={true}
+            treeData={props.options}
+            onChange={(value, option) => {
+                props.name && props.formInstance?.setFieldValue(props.name, formToValue(value as string[]));
+                props.onChange && props.onChange(value, props.formInstance);
+            }}
+            {...props.itemProps}
+        />
     )
 }
 
 const $Select: React.FC<$SelectProps> = (props) => {
 
-    const options = props.options;
-
-    const isTree = false;
+    const isTree = useMemo(()=>{
+        if(props.options){
+            const options = props.options;
+            for (const option of options) {
+                if (option.children && option.children.length > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    },[props.options]);
 
     return (
         <Space.Compact

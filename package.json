@@ -1,6 +1,6 @@
 {
   "name": "@codingapi/form-pc",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "A UI Framework built with React and TypeScript",
   "keywords": [
     "ui",
@@ -36,7 +36,7 @@
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "dependencies": {
-    "@codingapi/ui-framework": "^0.0.21",
+    "@codingapi/ui-framework": "^0.0.22",
     "monaco-editor": "^0.52.2"
   },
   "scripts": {
