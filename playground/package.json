@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@codingapi/form-pc": "file:../dist",
-    "@codingapi/ui-framework": "^0.0.23",
     "@types/node": "^16.18.108",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
