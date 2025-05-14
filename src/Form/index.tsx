@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
-import {FormField, FormInstance, AntdForm, AntdFormInstance} from "@codingapi/ui-framework";
+import {FormField, FormInstance, AntdForm, AntdFormInstance,FormFactory} from "@codingapi/ui-framework";
 import {Form as AntForm} from "antd";
-import {FormFactory} from "./factory";
 import {FormContext} from "./context";
 import "./index.scss";
+import "./register";
 
 export interface FormProps {
     // 表单字段
@@ -57,7 +57,7 @@ const FormComponent: React.FC<FormProps> = (props) => {
                 layout={props.layout}
             >
                 {fields.length > 0 && fields.map((field) => {
-                    return FormFactory.create(field) as React.ReactNode;
+                    return FormFactory.getInstance().create(field) as React.ReactNode;
                 })}
 
                 {props.children}
