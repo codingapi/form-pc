@@ -21,6 +21,7 @@ module.exports = {
         extensions: ['.ts', '.tsx', '.js'],
         alias: {
             '@': path.resolve(__dirname, 'src'),
+            '@codingapi/form-pc': path.resolve(__dirname, '../src'),
         },
     },
     module: {
