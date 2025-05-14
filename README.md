@@ -1,44 +1,71 @@
 # Form PC
 
-A modern UI Framework built with React and TypeScript, providing powerful form components and tools for building complex web applications.
+基于PC的Form表单渲染引擎
 
-## Features
-
-- 🚀 Built with React 18 and TypeScript
-- 📦 Modular and tree-shakeable
-- 🎨 Beautiful and customizable UI components
-- 📝 Rich form components and validation
-- 🔧 Easy to use and extend
-- 🎯 High performance and optimized bundle size
-
-## Installation
-
-```bash
-# Using npm
+## 安装
+```
 npm install @codingapi/form-pc
-
-# Using yarn
+# 或者使用yarn
 yarn add @codingapi/form-pc
-
-# Using pnpm
-pnpm add @codingapi/form-pc
 ```
 
-## Quick Start
+## 使用
 
-```tsx
-import { Form } from '@codingapi/form-pc';
+#### Form表单的渲染
+```
+import React from "react";
+import {Form} from "@codingapi/form-pc";
+import {FormField} from "@codingapi/ui-framework";
 
-function App() {
-  return (
-    <Form>
-      {/* Your form components here */}
-    </Form>
-  );
+const Test = () => {
+
+    const fields = [
+        {
+            type: 'input',
+            props: {
+                required: true,
+                name: ['user', 'name'],
+                label: '姓名',
+                placeholder: '请输入姓名',
+                validateFunction: async (content) => {
+                    const value = content.value;
+                    if (value) {
+                        return []
+                    }
+                    return ['姓名不能为空']
+                }
+            }
+        }] as FormField[]
+
+    return (
+        <>
+            <Form
+                layout={"vertical"}
+                onFinish={async (values) => {
+                    console.log(values);
+                }}
+                loadFields={async () => {
+                    return fields;
+                }}
+            >
+            </Form>
+        </>
+    )
 }
-```
 
-## Development
+export default Test;
+```
+更多示例请查看：https://github.com/codingapi/form-pc/tree/main/playground
+
+
+## 主要特征
+
+- 支持对常用的Form表单的组件渲染
+- 即支持Meta数据渲染，也支持组件的渲染
+- 支持对form表单的控制能力
+- 支持表单字段的onChange、validate能力
+
+## 开发
 
 ```bash
 # Install dependencies
@@ -53,32 +80,8 @@ yarn build
 # Run tests
 yarn test
 ```
+## 许可
 
-## Project Structure
-
-```
-form-pc/
-├── src/              # Source code
-├── dist/             # Build output
-│   ├── cjs/         # CommonJS build
-│   └── esm/         # ES Modules build
-├── rollup.config.js  # Rollup configuration
-└── package.json     # Project metadata
-```
-
-## Browser Support
-
-- Chrome >= 60
-- Firefox >= 60
-- Safari >= 12
-- Edge >= 79
-
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-## License
-
-Apache-2.0 © [CodingAPI](https://github.com/codingapi)
+Apache-2.0 © [CodingAPI](https://github.com/codingapi/form-pc/blob/main/LICENSE)
 
 
