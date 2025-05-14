@@ -1,3 +1,4 @@
+[![npm](https://img.shields.io/npm/v/@codingapi/form-pc.svg)](https://www.npmjs.com/package/@codingapi/form-pc)
 # Form PC
 
 基于PC的Form表单渲染引擎
