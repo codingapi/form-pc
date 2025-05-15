@@ -1,28 +1,14 @@
 import React, {useEffect} from "react";
-import {FormField, FormInstance, AntdForm, AntdFormInstance,FormFactory} from "@codingapi/ui-framework";
+import {FormField, FormInstance, AntdForm, AntdFormInstance,FormFactory,FormProps} from "@codingapi/ui-framework";
 import {Form as AntForm} from "antd";
 import {FormContext} from "./context";
 import "./index.scss";
-import "./register";
+import {registerDefaultFormItems} from "./register";
 
-export interface FormProps {
-    // 表单字段
-    loadFields?: () => Promise<FormField[]>;
-    // 表单提交事件
-    onFinish?: (values: any) => Promise<void>;
-    // form布局，默认vertical
-    layout?: 'horizontal' | 'vertical';
-    // children元素
-    children?: React.ReactNode;
-    // footer元素
-    footer?: React.ReactNode;
-    // 初始化值
-    initialValues?: any;
-    // 表单实例
-    form?: FormInstance;
-}
 
 const FormComponent: React.FC<FormProps> = (props) => {
+    registerDefaultFormItems();
+    props.registerFormItems && props.registerFormItems();
 
     const formInstance = props.form? props.form : new FormInstance();
 
