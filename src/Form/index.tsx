@@ -1,6 +1,14 @@
-import React, {useEffect} from "react";
-import {FormField, FormInstance, AntdForm, AntdFormInstance,FormFactory,FormProps} from "@codingapi/ui-framework";
-import {Form as AntForm} from "antd";
+import React, {useContext, useEffect} from "react";
+import {
+    AntdForm,
+    AntdFormInstance,
+    FormFactory,
+    FormField,
+    FormInstance,
+    FormProps, ThemeConfig,
+    ThemeProvider, ThemeProviderContext
+} from "@codingapi/ui-framework";
+import {ConfigProvider, Form as AntForm} from "antd";
 import {FormContext} from "./context";
 import "./index.scss";
 import {registerDefaultFormItems} from "./register";
@@ -10,7 +18,10 @@ const FormComponent: React.FC<FormProps> = (props) => {
     registerDefaultFormItems();
     props.registerFormItems && props.registerFormItems();
 
-    const formInstance = props.form? props.form : new FormInstance();
+    const formInstance = props.form ? props.form : new FormInstance();
+    const themeContext = useContext(ThemeProviderContext);
+
+    const theme = themeContext?.getTheme() || {} as ThemeConfig;
 
     const [fields, setFields] = React.useState<FormField[]>([]);
     formInstance.setFieldsUpdateDispatch(setFields);
@@ -31,36 +42,40 @@ const FormComponent: React.FC<FormProps> = (props) => {
     }, [props.loadFields]);
 
     return (
-        <FormContext.Provider
-            value={formInstance}
-        >
-            <AntForm
-                form={formControl}
-                onFinish={(values) => {
-                    props.onFinish && props.onFinish(values);
-                }}
-                initialValues={props.initialValues}
-                layout={props.layout}
+        <ThemeProvider theme={theme}>
+            <FormContext.Provider
+                value={formInstance}
             >
-                {fields.length > 0 && fields.map((field) => {
-                    return FormFactory.getInstance().create(field) as React.ReactNode;
-                })}
+                <ConfigProvider theme={theme}>
+                    <AntForm
+                        form={formControl}
+                        onFinish={(values) => {
+                            props.onFinish && props.onFinish(values);
+                        }}
+                        initialValues={props.initialValues}
+                        layout={props.layout}
+                    >
+                        {fields.length > 0 && fields.map((field) => {
+                            return FormFactory.getInstance().create(field) as React.ReactNode;
+                        })}
 
-                {props.children}
+                        {props.children}
 
-                {props.footer}
-            </AntForm>
-        </FormContext.Provider>
+                        {props.footer}
+                    </AntForm>
+                </ConfigProvider>
+            </FormContext.Provider>
+        </ThemeProvider>
     )
 }
 
 type FormType = typeof FormComponent;
 type FormComponentType = FormType & {
-    useForm: ()=>FormInstance;
+    useForm: () => FormInstance;
 };
 
 export const Form = FormComponent as FormComponentType;
-Form.useForm = ()=>{
+Form.useForm = () => {
     AntdForm.getInstance().registerForm({
         useForm(): AntdFormInstance {
             const [formInstance] = AntForm.useForm();

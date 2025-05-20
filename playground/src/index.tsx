@@ -3,13 +3,26 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {CSSUtils, ThemeConfig, ThemeProvider} from "@codingapi/ui-framework";
+import {ConfigProvider} from "antd";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const theme = {
+    token:{
+        contentFontSize:CSSUtils.getRootVariable('--content-font-size'),
+        colorPrimary:CSSUtils.getRootVariable('--primary-color'),
+    }
+} as ThemeConfig;
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+        <ConfigProvider theme={theme}>
+            <App />
+        </ConfigProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );
 
