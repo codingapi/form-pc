@@ -6,9 +6,6 @@
     "@codingapi/form-pc": "file:../src",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sass": "^1.78.0",
-    "sass-loader": "^16.0.1",
-    "typescript": "^5.6.2",
     "web-vitals": "^2.1.4"
   },
   "resolutions": {
@@ -40,12 +37,13 @@
     "jest-environment-jsdom": "^29.7.0",
     "mockjs": "^1.1.0",
     "monaco-editor-webpack-plugin": "^7.1.0",
-    "sass": "^1.78.0",
+    "sass": "^1.89.2",
     "sass-loader": "^16.0.1",
     "style-loader": "^4.0.0",
     "ts-jest": "^29.3.2",
     "ts-loader": "^9.5.1",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
   },
   "eslintConfig": {
     "extends": [
