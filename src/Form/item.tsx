@@ -18,6 +18,7 @@ export const FormItem:React.FC<FormField> = (props)=>{
             required={props.props.required}
             help={props.props.help}
             tooltip={props.props.tooltip}
+            hidden={props.props.hidden}
         >
             {formItem}
         </AntForm.Item>
