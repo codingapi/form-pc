@@ -8,7 +8,7 @@ const valueToForm = (value: string) => {
     if (value && value.length > 0) {
         return value.split(",");
     }
-    return value;
+    return [value];
 }
 
 const formToValue = (value: string[]) => {
@@ -20,9 +20,9 @@ const formToValue = (value: string[]) => {
 
 export const FormCheckbox: React.FC<FormTypeProps> = (props) => {
     const [options, setOptions] = React.useState(props.options);
-    const value = props.value?valueToForm(props.value):undefined;
+    const [value, setValue] = React.useState<string[]>([]);
 
-    const formContext = useContext(FormContext)|| undefined;
+    const formContext = useContext(FormContext) || undefined;
 
     const reloadOptions = () => {
         if (props.loadOptions) {
@@ -33,21 +33,28 @@ export const FormCheckbox: React.FC<FormTypeProps> = (props) => {
     }
 
     useEffect(() => {
+        if(props.value){
+            setValue(valueToForm(props.value));
+        }
+    }, [props.value]);
+
+    useEffect(() => {
         reloadOptions();
     }, []);
 
     return (
-        <Checkbox.Group
+        <Checkbox.Group<string>
             disabled={props.disabled}
             value={value}
             onChange={(e) => {
+                setValue(e);
                 const currentValue = formToValue(e);
                 props.onChange && props.onChange(currentValue, formContext)
             }}
             {...props.itemProps}
         >
             <Space direction={props.checkboxDirection}>
-                {options?.map((item,index) => {
+                {options?.map((item, index) => {
                     return (
                         <Checkbox
                             key={index}

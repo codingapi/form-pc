@@ -6,6 +6,7 @@ import {FormContext} from "./context";
 
 export const FormRadio: React.FC<FormTypeProps> = (props) => {
     const [options, setOptions] = React.useState(props.options);
+    const [value, setValue] = React.useState<string>('');
 
     const formContext = React.useContext(FormContext) || undefined;
 
@@ -21,11 +22,18 @@ export const FormRadio: React.FC<FormTypeProps> = (props) => {
         reloadOptions();
     }, []);
 
+    useEffect(() => {
+        if(props.value){
+            setValue(props.value);
+        }
+    }, [props.value]);
+
     return (
         <Radio.Group
             disabled={props.disabled}
-            value={props.value}
+            value={value}
             onChange={(value) => {
+                setValue(value.target.value);
                 const currentValue = value.target.value;
                 props.onChange && props.onChange(currentValue, formContext);
             }}
