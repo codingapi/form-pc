@@ -2,12 +2,12 @@ import React from "react";
 import {FormDisplay, FormFactory, FormField, NamePath} from "@codingapi/ui-framework";
 
 
-interface FormItemDisplayProps {
+interface FormDisplayRenderProps {
     display: FormDisplay;
     fields: FormField[];
 }
 
-const FormItemDisplay: React.FC<FormItemDisplayProps> = (props) => {
+const FormDisplayRender: React.FC<FormDisplayRenderProps> = (props) => {
     const loadField = (name: NamePath) => {
         const nameKey = Array.isArray(name) ? name.join('.') : name;
         return props.fields.find(f => {
@@ -40,4 +40,4 @@ const FormItemDisplay: React.FC<FormItemDisplayProps> = (props) => {
     )
 }
 
-export default FormItemDisplay;
+export default FormDisplayRender;
