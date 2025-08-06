@@ -1,17 +1,41 @@
 import React from "react";
-import {FormDisplay, FormField} from "@codingapi/ui-framework";
+import {FormDisplay, FormFactory, FormField, NamePath} from "@codingapi/ui-framework";
 
 
-interface FormItemDisplayProps{
-    display:FormDisplay;
-    fields:FormField[];
+interface FormItemDisplayProps {
+    display: FormDisplay;
+    fields: FormField[];
 }
 
 const FormItemDisplay: React.FC<FormItemDisplayProps> = (props) => {
+    const loadField = (name: NamePath) => {
+        const nameKey = Array.isArray(name) ? name.join('.') : name;
+        return props.fields.find(f => {
+            const fieldName = Array.isArray(f.props.name) ? f.props.name.join('.') : f.props.name;
+            return fieldName === nameKey;
+        });
+    }
+
 
     return (
         <div>
-            display
+            {props.display.body.map((item, i) => {
+                const fieldList = item.list || [];
+                return fieldList.map((field) => {
+                    if (field.fieldName) {
+                        const formFiled = loadField(field.fieldName);
+                        const label = formFiled?.props.label;
+                        if(formFiled) {
+                            const FormChildren = FormFactory.getInstance().create(formFiled);
+                            return (
+                                <>
+                                    {label}: {FormChildren}
+                                </>
+                            )
+                        }
+                    }
+                })
+            })}
         </div>
     )
 }
