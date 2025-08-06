@@ -1,9 +1,9 @@
-import React, {useEffect} from "react";
-import {FormItemProps,FormInstance} from "@codingapi/ui-framework";
-import {DatePicker, Form, Space} from "antd";
+import React from "react";
+import {FormInstance, FormTypeProps} from "@codingapi/ui-framework";
+import {DatePicker, Space} from "antd";
 import dayjs from "dayjs";
-import formFieldInit from "./common";
 import "./index.scss";
+import {FormContext} from "./context";
 
 const datePrecisionConverter = (precision?: string) => {
     if (precision === "day") {
@@ -62,7 +62,7 @@ const showTime = (precision?: string) => {
     return null;
 }
 
-interface $DatePicker extends FormItemProps{
+interface $DatePicker extends FormTypeProps{
     formInstance?:FormInstance;
 }
 
@@ -73,6 +73,7 @@ const $DatePicker:React.FC<$DatePicker> = (props)=>{
     const format = props.dateFormat || 'YYYY-MM-DD';
     const precision = datePrecisionConverter(props.datePrecision) || "date";
     const showTimeConfig = showTime(props.datePrecision);
+    const value = props.value?dayjs(props.value):undefined;
 
     return (
       <Space.Compact
@@ -86,14 +87,14 @@ const $DatePicker:React.FC<$DatePicker> = (props)=>{
                   width:"100%"
               }}
               disabled={props.disabled}
-              value={props.value}
+              value={value}
               prefix={props.prefix}
               suffixIcon={props.suffix}
+              placeholder={props.placeholder}
               picker={precision}
               showTime={showTimeConfig?{format: showTimeConfig.format}:false}
               onChange={(date, dateString) => {
                   const currentDate = dayjs(date).format(format);
-                  props.name && formInstance?.setFieldValue(props.name, currentDate);
                   props.onChange && props.onChange(currentDate, formInstance);
               }}
               {...props.itemProps}
@@ -103,42 +104,15 @@ const $DatePicker:React.FC<$DatePicker> = (props)=>{
     )
 }
 
-export const FormDate: React.FC<FormItemProps> = (props) => {
+export const FormDate: React.FC<FormTypeProps> = (props) => {
 
-    const {formContext} = formFieldInit(props);
-
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'date',
-                props: props
-            }
-        );
-    }, []);
+    const formContext = React.useContext(FormContext) || undefined;
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            hidden={props.hidden}
-            help={props.help}
-            required={props.required}
-            tooltip={props.tooltip}
-            getValueProps={(value) => {
-                if (value) {
-                    return {
-                        value: dayjs(value)
-                    }
-                }
-                return value;
-            }}
-        >
-            <$DatePicker
-                {...props}
-                formInstance={formContext}
-            />
-
-        </Form.Item>
+        <$DatePicker
+            {...props}
+            formInstance={formContext}
+        />
     )
 }
 

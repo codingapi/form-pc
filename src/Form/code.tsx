@@ -1,50 +1,29 @@
-import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Form} from "antd";
-import formFieldInit from "./common";
+import React from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
 import {CodeEditor} from "../CodeEditor";
 import "./index.scss";
+import {FormContext} from "./context";
 
 
-export const FormCode: React.FC<FormItemProps> = (props) => {
+export const FormCode: React.FC<FormTypeProps> = (props) => {
 
-    const {formContext} = formFieldInit(props);
-
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'code',
-                props: props
-            }
-        );
-    }, []);
-
+    const formContext = React.useContext(FormContext) || undefined;
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            hidden={props.hidden}
-            help={props.help}
-            required={props.required}
-            tooltip={props.tooltip}
-        >
-            <CodeEditor
-                readonly={props.disabled}
-                value={props.value}
-                onChange={(value) => {
-                    props.name && formContext?.setFieldValue(props.name, value);
-                    props.onChange && props.onChange(value, formContext);
-                }}
-                theme={props.codeTheme}
-                language={props.codeLanguage}
-                fontSize={props.codeFontSize}
-                style={props.codeStyle}
-                actionRef={props.codeActionRef}
-                onSelectedRun={props.onCodeSelectedRun}
-                editorProps={props.itemProps}
-            />
-        </Form.Item>
+        <CodeEditor
+            readonly={props.disabled}
+            value={props.value}
+            onChange={(value) => {
+                props.onChange && props.onChange(value, formContext);
+            }}
+            theme={props.codeTheme}
+            language={props.codeLanguage}
+            fontSize={props.codeFontSize}
+            style={props.codeStyle}
+            actionRef={props.codeActionRef}
+            onSelectedRun={props.onCodeSelectedRun}
+            editorProps={props.itemProps}
+        />
     )
 }
 

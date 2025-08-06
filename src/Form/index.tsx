@@ -2,17 +2,19 @@ import React, {useContext, useEffect} from "react";
 import {
     AntdForm,
     AntdFormInstance,
-    FormFactory,
     FormField,
     FormInstance,
-    FormProps, ThemeConfig,
-    ThemeProvider, ThemeProviderContext
+    FormProps,
+    ThemeConfig,
+    ThemeProvider,
+    ThemeProviderContext
 } from "@codingapi/ui-framework";
 import {ConfigProvider, Form as AntForm} from "antd";
 import {FormContext} from "./context";
 import "./index.scss";
 import {registerDefaultFormItems} from "./register";
-
+import {FormItem} from "./item";
+import FormItemDisplay from "./display";
 
 const FormComponent: React.FC<FormProps> = (props) => {
     registerDefaultFormItems();
@@ -55,9 +57,15 @@ const FormComponent: React.FC<FormProps> = (props) => {
                         initialValues={props.initialValues}
                         layout={props.layout}
                     >
-                        {fields.length > 0 && fields.map((field) => {
-                            return FormFactory.getInstance().create(field) as React.ReactNode;
+                        {fields.length > 0 && !props.display && fields.map((field) => {
+                            return (
+                                <FormItem {...field}/>
+                            )
                         })}
+
+                        {fields.length> 0 && props.display && (
+                            <FormItemDisplay display={props.display} fields={fields} />
+                        )}
 
                         {props.children}
 
@@ -72,6 +80,7 @@ const FormComponent: React.FC<FormProps> = (props) => {
 type FormType = typeof FormComponent;
 type FormComponentType = FormType & {
     useForm: () => FormInstance;
+    Item: typeof AntForm.Item;
 };
 
 export const Form = FormComponent as FormComponentType;
@@ -84,3 +93,5 @@ Form.useForm = () => {
     })
     return new FormInstance();
 };
+
+Form.Item = AntForm.Item;

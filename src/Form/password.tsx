@@ -1,47 +1,28 @@
-import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Form, Input} from "antd";
-import formFieldInit from "./common";
+import React from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {Input} from "antd";
 import "./index.scss";
+import {FormContext} from "./context";
 
-export const FormPassword: React.FC<FormItemProps> = (props) => {
+export const FormPassword: React.FC<FormTypeProps> = (props) => {
 
-    const {formContext} = formFieldInit(props);
-
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'password',
-                props: props
-            }
-        );
-    }, []);
+    const formContext = React.useContext(FormContext) || undefined;
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            hidden={props.hidden}
-            help={props.help}
-            required={props.required}
-            tooltip={props.tooltip}
-        >
-            <Input.Password
-                disabled={props.disabled}
-                value={props.value}
-                addonAfter={props.addonAfter}
-                addonBefore={props.addonBefore}
-                prefix={props.prefix}
-                suffix={props.suffix}
-                placeholder={props.placeholder}
-                onChange={(value) => {
-                    const currentValue = value.target.value;
-                    props.name && formContext?.setFieldValue(props.name, currentValue);
-                    props.onChange && props.onChange(currentValue, formContext);
-                }}
-                {...props.itemProps}
-            />
-        </Form.Item>
+        <Input.Password
+            disabled={props.disabled}
+            value={props.value}
+            addonAfter={props.addonAfter}
+            addonBefore={props.addonBefore}
+            prefix={props.prefix}
+            suffix={props.suffix}
+            placeholder={props.placeholder}
+            onChange={(value) => {
+                const currentValue = value.target.value;
+                props.onChange && props.onChange(currentValue, formContext);
+            }}
+            {...props.itemProps}
+        />
     )
 }
 

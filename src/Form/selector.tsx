@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
-import {FormItemProps,FormInstance} from "@codingapi/ui-framework";
-import {Form, Select, Space} from "antd";
-import formFieldInit from "./common";
+import React, {useContext, useEffect} from "react";
+import {FormInstance, FormTypeProps} from "@codingapi/ui-framework";
+import {Select, Space} from "antd";
 import "./index.scss";
+import {FormContext} from "./context";
 
 const valueToForm = (value: string) => {
     if (value && value.length > 0) {
@@ -20,12 +20,13 @@ const formToValue = (value: string[] |string) => {
     return value;
 }
 
-interface $SelectorProps extends FormItemProps{
+interface $SelectorProps extends FormTypeProps{
     formInstance?:FormInstance;
 }
 
 const $Selector: React.FC<$SelectorProps> = (props) => {
     const formInstance = props.formInstance;
+    const value = valueToForm(props.value);
 
     return (
         <Space.Compact
@@ -38,14 +39,14 @@ const $Selector: React.FC<$SelectorProps> = (props) => {
                 prefix={props.prefix}
                 suffixIcon={props.suffix}
                 disabled={props.disabled}
-                value={props.value}
+                value={value}
                 mode={props.selectMultiple ? "multiple" : undefined}
                 placeholder={props.placeholder}
                 showSearch={true}
                 options={props.options}
                 onChange={(value,option) => {
-                    props.name && formInstance?.setFieldValue(props.name, formToValue(value as string[]));
-                    props.onChange && props.onChange(value, formInstance);
+                    const currentValue = formToValue(value);
+                    props.onChange && props.onChange(currentValue, formInstance);
                 }}
             />
             {props.addonAfter}
@@ -53,13 +54,11 @@ const $Selector: React.FC<$SelectorProps> = (props) => {
     )
 }
 
-export const FormSelector: React.FC<FormItemProps> = (props) => {
+export const FormSelector: React.FC<FormTypeProps> = (props) => {
 
     const [options, setOptions] = React.useState(props.options);
 
-    const {formContext} = formFieldInit(props, () => {
-        reloadOptions();
-    });
+    const formContext = useContext(FormContext)|| undefined;
 
     const reloadOptions = () => {
         if (props.loadOptions) {
@@ -70,40 +69,16 @@ export const FormSelector: React.FC<FormItemProps> = (props) => {
     }
 
     useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'selector',
-                props: props
-            }
-        );
         reloadOptions();
     }, []);
 
-    return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            required={props.required}
-            hidden={props.hidden}
-            help={props.help}
-            tooltip={props.tooltip}
-            getValueProps={(value) => {
-                if (value) {
-                    return {
-                        value: valueToForm(value)
-                    }
-                }
-                return value
-            }}
-            {...props.itemProps}
-        >
-            <$Selector
-                {...props}
-                options={options}
-                formInstance={formContext}
-            />
 
-        </Form.Item>
+    return (
+        <$Selector
+            {...props}
+            options={options}
+            formInstance={formContext}
+        />
     )
 }
 

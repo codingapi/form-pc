@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
-import {FormItemProps,FormInstance} from "@codingapi/ui-framework";
-import {Cascader, Form, Space} from "antd";
-import formFieldInit from "./common";
+import React, {useContext, useEffect} from "react";
+import {FormInstance, FormTypeProps} from "@codingapi/ui-framework";
+import {Cascader, Space} from "antd";
 import "./index.scss";
+import {FormContext} from "./context";
 
 const valueToForm = (value: string|string[]) => {
     if (value && value.length > 0) {
@@ -21,12 +21,14 @@ const formToValue = (value: string[]) => {
     return value;
 }
 
-interface $CascaderProps extends FormItemProps{
+interface $CascaderProps extends FormTypeProps{
     formInstance?:FormInstance;
 }
 
 const $Cascader:React.FC<$CascaderProps> = (props)=>{
     const formInstance = props.formInstance;
+    const value = props.value?valueToForm(props.value):undefined;
+
     return (
        <Space.Compact
            style={{
@@ -36,13 +38,13 @@ const $Cascader:React.FC<$CascaderProps> = (props)=>{
            {props.addonBefore}
            <Cascader
                disabled={props.disabled}
-               value={props.value}
+               value={value}
                suffixIcon={props.suffix}
                prefix={props.prefix}
                options={props.options}
                onChange={(value) => {
-                   props.name && formInstance?.setFieldValue(props.name, formToValue(value as string[]));
-                   props.onChange && props.onChange(value, formInstance);
+                   const currentValue = formToValue(value as string[]);
+                   props.onChange && props.onChange(currentValue, formInstance);
                }}
                {...props.itemProps}
            />
@@ -51,13 +53,11 @@ const $Cascader:React.FC<$CascaderProps> = (props)=>{
     )
 }
 
-export const FormCascader: React.FC<FormItemProps> = (props) => {
+export const FormCascader: React.FC<FormTypeProps> = (props) => {
 
     const [options, setOptions] = React.useState(props.options);
 
-    const {formContext} = formFieldInit(props, () => {
-        reloadOptions();
-    });
+    const formContext = useContext(FormContext) || undefined;
 
     const reloadOptions = () => {
         if (props.loadOptions) {
@@ -68,39 +68,16 @@ export const FormCascader: React.FC<FormItemProps> = (props) => {
     }
 
     useEffect(() => {
-        formContext?.addFormField({
-            type: 'cascader',
-            props: props
-        });
         reloadOptions();
     }, []);
 
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            required={props.required}
-            hidden={props.hidden}
-            help={props.help}
-            tooltip={props.tooltip}
-
-            getValueProps={(value) => {
-                if (value) {
-                    return {
-                        value: valueToForm(value)
-                    }
-                }
-                return value
-            }}
-        >
-            <$Cascader
-                {...props}
-                options={options}
-                formInstance={formContext}
-            />
-
-        </Form.Item>
+        <$Cascader
+            {...props}
+            options={options}
+            formInstance={formContext}
+        />
     )
 }
 

@@ -1,51 +1,32 @@
-import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Form, InputNumber} from "antd";
-import formFieldInit from "./common";
+import React from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {InputNumber} from "antd";
 import "./index.scss";
+import {FormContext} from "./context";
 
-export const FormStepper: React.FC<FormItemProps> = (props) => {
+export const FormStepper: React.FC<FormTypeProps> = (props) => {
 
-    const {formContext} = formFieldInit(props);
-
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'stepper',
-                props: props
-            }
-        );
-    }, []);
+    const formContext = React.useContext(FormContext) || undefined;
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            hidden={props.hidden}
-            help={props.help}
-            required={props.required}
-            tooltip={props.tooltip}
-        >
-            <InputNumber
-                style={{
-                    width:"100%"
-                }}
-                addonBefore={props.addonBefore}
-                addonAfter={props.addonAfter}
-                prefix={props.prefix}
-                suffix={props.suffix}
-                disabled={props.disabled}
-                value={props.value}
-                max={props.stepperMaxNumber}
-                min={props.stepperMinNumber}
-                step={props.stepperDecimalLength}
-                onChange={(value) => {
-                    props.name && formContext?.setFieldValue(props.name, value);
-                    props.onChange && props.onChange(value, formContext);
-                }}
-                {...props.itemProps}
-            />
-        </Form.Item>
+        <InputNumber
+            style={{
+                width:"100%"
+            }}
+            addonBefore={props.addonBefore}
+            addonAfter={props.addonAfter}
+            prefix={props.prefix}
+            suffix={props.suffix}
+            disabled={props.disabled}
+            value={props.value}
+            max={props.stepperMaxNumber}
+            min={props.stepperMinNumber}
+            step={props.stepperDecimalLength}
+            onChange={(value) => {
+                props.onChange && props.onChange(value, formContext);
+            }}
+            {...props.itemProps}
+        />
     )
 }
 

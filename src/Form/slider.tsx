@@ -1,55 +1,36 @@
-import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Form, Slider} from "antd";
-import formFieldInit from "./common";
+import React from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {Slider} from "antd";
 import "./index.scss";
+import {FormContext} from "./context";
 
-export const FormSlider: React.FC<FormItemProps> = (props) => {
+export const FormSlider: React.FC<FormTypeProps> = (props) => {
 
-    const {formContext} = formFieldInit(props);
-
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'slider',
-                props: props
-            }
-        );
-    }, []);
+    const formContext = React.useContext(FormContext) || undefined;
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            hidden={props.hidden}
-            help={props.help}
-            required={props.required}
-            tooltip={props.tooltip}
-        >
-            <Slider
-                disabled={props.disabled}
-                value={props.value}
-                max={props.sliderMaxNumber}
-                min={props.sliderMinNumber}
-                step={props.sliderStep}
-                range={props.sliderRange}
-                tooltip={props.sliderPopover && {
-                    open: true,
-                    placement: 'top',
-                    getPopupContainer: () => {
-                        return document.getElementById('root') as HTMLElement;
-                    }
-                } || {
-                    open: false
-                }}
-                marks={props.sliderMarks}
-                onChange={(value:any) => {
-                    props.name && formContext?.setFieldValue(props.name, value);
-                    props.onChange && props.onChange(value, formContext);
-                }}
-                {...props.itemProps}
-            />
-        </Form.Item>
+        <Slider
+            disabled={props.disabled}
+            value={props.value}
+            max={props.sliderMaxNumber}
+            min={props.sliderMinNumber}
+            step={props.sliderStep}
+            range={props.sliderRange}
+            tooltip={props.sliderPopover && {
+                open: true,
+                placement: 'top',
+                getPopupContainer: () => {
+                    return document.getElementById('root') as HTMLElement;
+                }
+            } || {
+                open: false
+            }}
+            marks={props.sliderMarks}
+            onChange={(value:any) => {
+                props.onChange && props.onChange(value, formContext);
+            }}
+            {...props.itemProps}
+        />
     )
 }
 

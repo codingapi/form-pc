@@ -1,46 +1,27 @@
-import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Form, Input} from "antd";
-import formFieldInit from "./common";
+import React from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {Input} from "antd";
 import "./index.scss";
+import {FormContext} from "./context";
 
-export const FormTextArea: React.FC<FormItemProps> = (props) => {
+export const FormTextArea: React.FC<FormTypeProps> = (props) => {
 
-    const {formContext} = formFieldInit(props);
-
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'textarea',
-                props: props
-            }
-        );
-    }, []);
+    const formContext = React.useContext(FormContext) || undefined;
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            required={props.required}
-            hidden={props.hidden}
-            help={props.help}
-            tooltip={props.tooltip}
-        >
-            <Input.TextArea
-                disabled={props.disabled}
-                value={props.value}
-                showCount={true}
-                placeholder={props.placeholder}
-                maxLength={props.textAreaMaxLength}
-                rows={props.textAreaRows}
-                onChange={(value) => {
-                    const currentValue = value.target.value;
-                    props.name && formContext?.setFieldValue(props.name, currentValue);
-                    props.onChange && props.onChange(currentValue, formContext);
-                }}
-                {...props.itemProps}
-            />
-        </Form.Item>
+        <Input.TextArea
+            disabled={props.disabled}
+            value={props.value}
+            showCount={true}
+            placeholder={props.placeholder}
+            maxLength={props.textAreaMaxLength}
+            rows={props.textAreaRows}
+            onChange={(value) => {
+                const currentValue = value.target.value;
+                props.onChange && props.onChange(currentValue, formContext);
+            }}
+            {...props.itemProps}
+        />
     )
 }
 

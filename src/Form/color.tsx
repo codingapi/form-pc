@@ -1,9 +1,9 @@
-import React, {useEffect} from "react";
-import {FormItemProps,FormInstance} from "@codingapi/ui-framework";
-import {ColorPicker, Form, Space} from "antd";
-import formFieldInit from "./common";
+import React, {useContext} from "react";
+import {FormInstance, FormTypeProps} from "@codingapi/ui-framework";
+import {ColorPicker, Space} from "antd";
 import type {AggregationColor} from "antd/es/color-picker/color";
 import "./index.scss";
+import {FormContext} from "./context";
 
 const formToValue = (value: AggregationColor) => {
     if (value) {
@@ -12,7 +12,7 @@ const formToValue = (value: AggregationColor) => {
     return value;
 }
 
-interface $ColorPickerProps extends FormItemProps{
+interface $ColorPickerProps extends FormTypeProps{
     formInstance?:FormInstance;
 }
 
@@ -31,7 +31,6 @@ const $ColorPicker:React.FC<$ColorPickerProps> = (props)=>{
                value={props.value}
                onChange={(value) => {
                    const currentValue = formToValue(value);
-                   props.name && formInstance?.setFieldValue(props.name, currentValue);
                    props.onChange && props.onChange(currentValue, formInstance);
                }}
                {...props.itemProps}
@@ -41,34 +40,15 @@ const $ColorPicker:React.FC<$ColorPickerProps> = (props)=>{
     )
 }
 
-export const FormColor: React.FC<FormItemProps> = (props) => {
+export const FormColor: React.FC<FormTypeProps> = (props) => {
 
-    const {formContext} = formFieldInit(props);
-
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'color',
-                props: props
-            }
-        );
-    }, []);
+    const formContext = useContext(FormContext) || undefined;
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            hidden={props.hidden}
-            help={props.help}
-            required={props.required}
-            tooltip={props.tooltip}
-        >
-            <$ColorPicker
-                {...props}
-                formInstance={formContext}
-            />
-
-        </Form.Item>
+        <$ColorPicker
+            {...props}
+            formInstance={formContext}
+        />
     )
 }
 

@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Checkbox, Form, Space} from "antd";
-import formFieldInit from "./common";
+import React, {useContext, useEffect} from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {Checkbox, Space} from "antd";
 import "./index.scss";
+import {FormContext} from "./context";
 
 const valueToForm = (value: string) => {
     if (value && value.length > 0) {
@@ -18,12 +18,11 @@ const formToValue = (value: string[]) => {
     return value;
 }
 
-export const FormCheckbox: React.FC<FormItemProps> = (props) => {
+export const FormCheckbox: React.FC<FormTypeProps> = (props) => {
     const [options, setOptions] = React.useState(props.options);
+    const value = props.value?valueToForm(props.value):undefined;
 
-    const {formContext} = formFieldInit(props, () => {
-        reloadOptions();
-    });
+    const formContext = useContext(FormContext)|| undefined;
 
     const reloadOptions = () => {
         if (props.loadOptions) {
@@ -34,52 +33,31 @@ export const FormCheckbox: React.FC<FormItemProps> = (props) => {
     }
 
     useEffect(() => {
-        formContext?.addFormField({
-            type: "checkbox",
-            props: props
-        });
         reloadOptions();
     }, []);
 
     return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            required={props.required}
-            hidden={props.hidden}
-            help={props.help}
-            tooltip={props.tooltip}
-            getValueProps={(value) => {
-                if (value) {
-                    return {
-                        value: valueToForm(value)
-                    }
-                }
-                return value
+        <Checkbox.Group
+            disabled={props.disabled}
+            value={value}
+            onChange={(e) => {
+                const currentValue = formToValue(e);
+                props.onChange && props.onChange(currentValue, formContext)
             }}
+            {...props.itemProps}
         >
-            <Checkbox.Group
-                disabled={props.disabled}
-                value={props.value}
-                onChange={(e) => {
-                    props.name && formContext?.setFieldValue(props.name, formToValue(e as string[]));
-                    props.onChange && props.onChange(e, formContext)
-                }}
-                {...props.itemProps}
-            >
-                <Space direction={props.checkboxDirection}>
-                    {options?.map((item,index) => {
-                        return (
-                            <Checkbox
-                                key={index}
-                                disabled={item.disable}
-                                value={item.value}
-                            >{item.label}</Checkbox>
-                        )
-                    })}
-                </Space>
-            </Checkbox.Group>
-        </Form.Item>
+            <Space direction={props.checkboxDirection}>
+                {options?.map((item,index) => {
+                    return (
+                        <Checkbox
+                            key={index}
+                            disabled={item.disable}
+                            value={item.value}
+                        >{item.label}</Checkbox>
+                    )
+                })}
+            </Space>
+        </Checkbox.Group>
     )
 }
 

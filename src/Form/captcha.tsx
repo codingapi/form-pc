@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
-import {Form, Input} from "antd";
-import formFieldInit from "./common";
+import React, {useContext, useEffect, useState} from "react";
+import {FormTypeProps} from "@codingapi/ui-framework";
+import {Input} from "antd";
 import "./index.scss";
+import {FormContext} from "./context";
 
 
-const Captcha: React.FC<FormItemProps> = (props) => {
+export const FormCaptcha: React.FC<FormTypeProps> = (props) => {
 
     const [captchaImg, setCaptchaImg] = useState<string>('');
-    const {formContext} = formFieldInit(props);
+    const formContext = useContext(FormContext) || undefined;
 
     const reloadCaptcha = () => {
         props.onCaptchaRefresh && props.onCaptchaRefresh().then((res) => {
@@ -36,7 +36,6 @@ const Captcha: React.FC<FormItemProps> = (props) => {
                 placeholder={props.placeholder}
                 onChange={(e) => {
                     const currentValue = e.target.value;
-                    props.name && formContext?.setFieldValue(props.name, currentValue);
                     props.onChange && props.onChange(currentValue, formContext);
                 }}
                 {...props.itemProps}
@@ -54,33 +53,4 @@ const Captcha: React.FC<FormItemProps> = (props) => {
     )
 }
 
-
-export const FormCaptcha: React.FC<FormItemProps> = (props) => {
-    const {formContext} = formFieldInit(props);
-
-    useEffect(() => {
-        formContext?.addFormField(
-            {
-                type: 'captcha',
-                props: props
-            }
-        );
-    }, []);
-
-
-    return (
-        <Form.Item
-            name={props.name}
-            label={props.label}
-            required={props.required}
-            hidden={props.hidden}
-            help={props.help}
-            tooltip={props.tooltip}
-        >
-            <Captcha
-                {...props}
-            />
-        </Form.Item>
-    )
-}
 
