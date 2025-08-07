@@ -19,6 +19,7 @@ export const FormStepper: React.FC<FormTypeProps> = (props) => {
             suffix={props.suffix}
             disabled={props.disabled}
             value={props.value}
+            placeholder={props.placeholder}
             max={props.stepperMaxNumber}
             min={props.stepperMinNumber}
             step={props.stepperDecimalLength}

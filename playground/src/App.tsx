@@ -2,7 +2,6 @@ import React from 'react';
 import {Button, message, Row} from "antd";
 import {Form} from "@codingapi/form-pc";
 import {FormDisplay, FormField, FormInstance} from "@codingapi/ui-framework";
-import FormItemDisplay from "@/display";
 
 const FooterButtons: React.FC<{ formInstance: FormInstance }> = ({formInstance}) => {
     const data = {
@@ -156,26 +155,29 @@ const App = () => {
                 list: [
                     [
                         {
-                            fieldName: ['user','name'],
+                            fieldName: ['user', 'name'],
                         },
                         {
-                            fieldName: ['user','age'],
-                        },
-                    ],
-                    [
-                        {
-                            fieldName: ['user','password'],
-                        },
-                        {
-                            fieldName: ['user','checkbox'],
-                        },
-                        {
-                            fieldName: ['user','radio'],
+                            fieldName: ['user', 'age'],
                         },
                     ],
                     [
                         {
-                            fieldName: ['user','rate'],
+                            fieldName: ['user', 'password'],
+                        },
+                        {
+                            fieldName: ['user', 'checkbox'],
+                        },
+                        {
+                            fieldName: ['user', 'radio'],
+                        },
+                    ],
+                    [
+                        {
+                            fieldName: ['user', 'rate'],
+                        },
+                        {
+                            fieldName: ['user', 'date'],
                         },
                     ],
                 ]
@@ -412,16 +414,15 @@ const App = () => {
     return (
         <>
             <Row>
-               <Form
-                   form={leftFormInstance}
-               >
-                   <FormItemDisplay
-                       display={display}
-                       fields={fields}
-                   />
-               </Form>
-
-                <FooterButtons formInstance={leftFormInstance} />
+                <Form
+                    form={leftFormInstance}
+                    loadFields={async () => {
+                        return fields;
+                    }}
+                    display={display}
+                >
+                </Form>
+                <FooterButtons formInstance={leftFormInstance}/>
             </Row>
 
         </>
