@@ -50,6 +50,7 @@ const FooterButtons: React.FC<{ formInstance: FormInstance }> = ({formInstance})
             <Button
                 onClick={async () => {
                     const result = await formInstance.validate();
+                    console.log(result);
                     if (result) {
                         message.success("验证通过");
                     } else {
@@ -253,7 +254,14 @@ const App = () => {
                     {label: '选项1', value: '1'},
                     {label: '选项2', value: '2'},
                     {label: '选项3', value: '3'},
-                ]
+                ],
+                validateFunction: async (content) => {
+                    const value = content.value;
+                    if (value) {
+                        return []
+                    }
+                    return ['银行卡密码不能为空']
+                }
             }
         },
         {
@@ -422,8 +430,9 @@ const App = () => {
                     display={display}
                 >
                 </Form>
-                <FooterButtons formInstance={leftFormInstance}/>
+
             </Row>
+            <FooterButtons formInstance={leftFormInstance}/>
 
         </>
     );

@@ -1,10 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { FormDisplay, FormFactory, FormField, NamePath } from "@codingapi/ui-framework";
 import { Row, Col, Form as AntForm } from "antd";
+import {FormItemProps} from "@codingapi/ui-framework/dist/Form/types";
+import formFieldInit from "./common";
 
 interface FormDisplayRenderProps {
     display: FormDisplay;
     fields: FormField[];
+}
+
+interface FormItemRenderProps{
+    field: FormField;
+    children: React.ReactNode;
+}
+
+const FormItemRender:React.FC<FormItemRenderProps> = (props)=>{
+
+    const {formContext} = formFieldInit(props.field.props);
+
+    useEffect(() => {
+        formContext?.addFormField(props.field);
+    }, []);
+
+    return (
+        <div style={styles.formItemContainer}>
+            <AntForm.Item
+                name={props.field.props.name}
+                rules={props.field.props.required ? [{ required: true, message: `请输入${props.field.props.label}` }] : []}
+                help={props.field.props.help}
+                tooltip={props.field.props.tooltip}
+                style={{
+                    margin: 0,
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    alignItems: 'center'
+                }}
+            >
+                {props.children}
+            </AntForm.Item>
+        </div>
+    )
 }
 
 const FormDisplayRender: React.FC<FormDisplayRenderProps> = (props) => {
@@ -362,23 +398,10 @@ const FormDisplayRender: React.FC<FormDisplayRenderProps> = (props) => {
                                                                     {label}
                                                                 </div>
                                                                 <div style={styles.tableCellValue}>
-                                                                    <div style={styles.formItemContainer}>
-                                                                        <AntForm.Item
-                                                                            name={field.fieldName}
-                                                                            rules={formField.props.required ? [{ required: true, message: `请输入${label}` }] : []}
-                                                                            help={formField.props.help}
-                                                                            tooltip={formField.props.tooltip}
-                                                                            style={{
-                                                                                margin: 0,
-                                                                                width: '100%',
-                                                                                height: '100%',
-                                                                                display: 'flex',
-                                                                                alignItems: 'center'
-                                                                            }}
-                                                                        >
-                                                                            {newChildren}
-                                                                        </AntForm.Item>
-                                                                    </div>
+                                                                   <FormItemRender
+                                                                       field={formField}
+                                                                       children={newChildren}
+                                                                   />
                                                                 </div>
                                                             </Col>
                                                         );
