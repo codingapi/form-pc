@@ -1,25 +1,8 @@
 import React from 'react';
-import {Button, Col, message, Row} from "antd";
-import {
-    Form,
-    FormCaptcha,
-    FormCascader,
-    FormCheckbox,
-    FormCode,
-    FormColor,
-    FormDate,
-    FormInput,
-    FormPassword,
-    FormRadio,
-    FormRate,
-    FormSelect,
-    FormSlider,
-    FormStepper,
-    FormSwitch,
-    FormTextArea,
-    FormUploader
-} from "@codingapi/form-pc";
+import {Button, message, Row} from "antd";
+import {Form} from "@codingapi/form-pc";
 import {FormDisplay, FormField, FormInstance} from "@codingapi/ui-framework";
+import FormItemDisplay from "@/display";
 
 const FooterButtons: React.FC<{ formInstance: FormInstance }> = ({formInstance}) => {
     const data = {
@@ -176,12 +159,23 @@ const App = () => {
                             fieldName: ['user','name'],
                         },
                         {
-                            fieldName: ['user','name'],
+                            fieldName: ['user','age'],
                         },
                     ],
                     [
                         {
-                            fieldName: ['user','name'],
+                            fieldName: ['user','password'],
+                        },
+                        {
+                            fieldName: ['user','checkbox'],
+                        },
+                        {
+                            fieldName: ['user','radio'],
+                        },
+                    ],
+                    [
+                        {
+                            fieldName: ['user','rate'],
                         },
                     ],
                 ]
@@ -417,277 +411,17 @@ const App = () => {
 
     return (
         <>
-            <Row gutter={[24, 24]}>
-                <Col span={12}>
-                    <Form
-                        form={leftFormInstance}
-                        layout={"horizontal"}
-                        onFinish={async (values) => {
-                            message.success(JSON.stringify(values));
-                        }}
-                        footer={(
-                            <FooterButtons
-                                formInstance={leftFormInstance}
-                            />
-                        )}
-                    >
-                        <Form.Item
-                            required={true}
-                            name={["user", "name"]}
-                            label={"姓名"}
-                        >
-                            <FormInput
-                                placeholder={"请输入姓名"}
-                                validateFunction={async (content) => {
-                                    const value = content.value;
-                                    if (value) {
-                                        return []
-                                    }
-                                    return ['姓名不能为空']
-                                }}
-                            />
-                        </Form.Item>
+            <Row>
+               <Form
+                   form={leftFormInstance}
+               >
+                   <FormItemDisplay
+                       display={display}
+                       fields={fields}
+                   />
+               </Form>
 
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "age"]}
-                            label={"年龄"}
-                        >
-                            <FormStepper
-                                placeholder={"请输入年龄"}
-                            />
-                        </Form.Item>
-
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "password"]}
-                            label={"银行卡密码"}
-                        >
-                            <FormPassword
-                                placeholder={"请输入银行卡密码"}
-                                validateFunction={async (content) => {
-                                    const value = content.value;
-                                    if (value) {
-                                        return []
-                                    }
-                                    return ['银行卡密码不能为空']
-                                }}
-                            />
-                        </Form.Item>
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "code"]}
-                            label={"银行卡验证码"}
-                        >
-                            <FormCaptcha
-                                placeholder={"请输入银行卡验证码"}
-                                onCaptchaRefresh={async () => {
-                                    console.log('refresh captcha')
-                                    return {
-                                        url: '/captcha.jpeg',
-                                        code: '123'
-                                    }
-                                }}
-                            />
-                        </Form.Item>
-
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "checkbox"]}
-                            label={"复选框"}
-                        >
-                            <FormCheckbox
-                                options={[
-                                    {label: '选项1', value: '1'},
-                                    {label: '选项2', value: '2'},
-                                    {label: '选项3', value: '3'},
-                                ]}
-                            />
-                        </Form.Item>
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "radio"]}
-                            label={"单选框"}
-                        >
-                            <FormRadio
-                                options={[
-                                    {label: '选项1', value: '1'},
-                                    {label: '选项2', value: '2'},
-                                    {label: '选项3', value: '3'},
-                                ]}
-                            />
-                        </Form.Item>
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "rate"]}
-                            label={"评分"}
-                        >
-                            <FormRate/>
-                        </Form.Item>
-
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "slider"]}
-                            label={"滑块"}
-                        >
-                            <FormSlider
-                                sliderPopover={true}
-                            />
-                        </Form.Item>
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "switch"]}
-                            label={"开关"}
-                        >
-                            <FormSwitch/>
-                        </Form.Item>
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "textarea"]}
-                            label={"文本域"}
-                        >
-                            <FormTextArea/>
-                        </Form.Item>
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "date"]}
-                            label={"日期"}
-                        >
-                            <FormDate/>
-                        </Form.Item>
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "cascader"]}
-                            label={"级联选择"}
-                        >
-                            <FormCascader
-                                options={[
-                                    {
-                                        label: '选项1',
-                                        value: '1',
-                                        children: [
-                                            {
-                                                label: '选项1-1',
-                                                value: '1-1',
-                                                children: [
-                                                    {
-                                                        label: '选项1-1-1',
-                                                        value: '1-1-1',
-                                                    },
-                                                    {
-                                                        label: '选项1-1-2',
-                                                        value: '1-1-2',
-                                                    },
-                                                ]
-                                            },
-                                            {
-                                                label: '选项1-2',
-                                                value: '1-2',
-                                            },
-                                        ]
-                                    },
-                                    {
-                                        label: '选项2',
-                                        value: '2',
-                                        children: [
-                                            {
-                                                label: '选项2-1',
-                                                value: '2-1',
-                                            },
-                                            {
-                                                label: '选项2-2',
-                                                value: '2-2',
-                                            },
-                                        ]
-                                    },
-                                ]}
-                            />
-                        </Form.Item>
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "select"]}
-                            label={"选择器"}
-                        >
-                            <FormSelect
-                                selectMultiple={true}
-                                options={[
-                                    {
-                                        label: '选项1', value: '1',
-                                        children: [
-                                            {
-                                                label: '选项1-1',
-                                                value: '1-1',
-                                                children: [
-                                                    {label: '选项1-1-1', value: '1-1-1'},
-                                                    {label: '选项1-1-2', value: '1-1-2'},
-                                                ]
-                                            },
-                                            {label: '选项1-2', value: '1-2'},
-                                        ]
-                                    },
-                                    {label: '选项2', value: '2'},
-                                    {label: '选项3', value: '3'},
-                                ]}
-                            />
-                        </Form.Item>
-
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "avatar"]}
-                            label={"头像"}
-                        >
-                            <FormUploader/>
-                        </Form.Item>
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "color"]}
-                            label={"颜色"}
-                        >
-                            <FormColor/>
-                        </Form.Item>
-
-                        <Form.Item
-                            required={true}
-                            name={["user", "ideCode"]}
-                            label={"代码"}
-                        >
-                            <FormCode/>
-                        </Form.Item>
-                    </Form>
-                </Col>
-
-                <Col span={12}>
-                    <Form
-                        onFinish={async (values) => {
-                            message.success(JSON.stringify(values));
-                        }}
-                        form={rightFormInstance}
-                        footer={(
-                            <FooterButtons
-                                formInstance={rightFormInstance}
-                            />
-                        )}
-                        loadFields={async () => {
-                            return fields;
-                        }}
-                        display={display}
-                    >
-                    </Form>
-                </Col>
+                <FooterButtons formInstance={leftFormInstance} />
             </Row>
 
         </>
