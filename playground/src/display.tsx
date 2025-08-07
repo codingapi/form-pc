@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {FormDisplay, FormFactory, FormField, NamePath} from "@codingapi/ui-framework";
 import {Col, Form as AntForm, Row} from "antd";
-import {formFieldInit} from "./common";
+import {formFieldInit} from "@codingapi/form-pc";
 
 interface FormDisplayRenderProps {
     display: FormDisplay;

@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {FormItemProps} from "@codingapi/ui-framework";
 import {FormContext} from "./context";
 
-const formFieldInit = (props: FormItemProps, reloadOption?: () => void) => {
+export const formFieldInit = (props: FormItemProps, reloadOption?: () => void) => {
     const formContext = React.useContext(FormContext) || undefined;
     const formAction = formContext?.getFormAction();
     const validateContext = formContext?.getFormValidateContext();
@@ -43,5 +43,3 @@ const formFieldInit = (props: FormItemProps, reloadOption?: () => void) => {
 
     return {formContext, validateContext};
 }
-
-export default formFieldInit;

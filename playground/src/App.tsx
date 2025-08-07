@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, message, Row} from "antd";
 import {Form} from "@codingapi/form-pc";
 import {FormDisplay, FormField, FormInstance, ValidateUtils} from "@codingapi/ui-framework";
+import FormDisplayRender from "@/display";
 
 const FooterButtons: React.FC<{ formInstance: FormInstance }> = ({formInstance}) => {
     const data = {
@@ -458,11 +459,11 @@ const App = () => {
             <Row>
                 <Form
                     form={leftFormInstance}
-                    loadFields={async () => {
-                        return fields;
-                    }}
-                    display={display}
                 >
+                    <FormDisplayRender
+                        display={display}
+                        fields={fields}
+                    />
                 </Form>
 
             </Row>
