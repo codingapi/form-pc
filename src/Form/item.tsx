@@ -1,24 +1,38 @@
 import React, {useEffect} from "react";
 import {Form as AntForm} from "antd";
-import {FormFactory, FormField} from "@codingapi/ui-framework";
+import {FormFactory, FormItemProps} from "@codingapi/ui-framework";
 import {formFieldInit} from "./common";
 
-export const FormItem:React.FC<FormField> = (props)=>{
-    const formItem =  FormFactory.getInstance().create(props) as React.ReactNode;
-    const {formContext} = formFieldInit(props.props);
+interface FormItemRenderProps extends FormItemProps{
+    type: string;
+}
+
+export const FormItem:React.FC<FormItemRenderProps> = (props)=>{
+    const formItem =  FormFactory.getInstance().create({
+        type: props.type,
+        props: {
+            ...props,
+        }
+    }) as React.ReactNode;
+    const {formContext} = formFieldInit(props);
 
     useEffect(() => {
-        formContext?.addFormField(props);
+        formContext?.addFormField({
+            type:props.type,
+            props:{
+                ...props,
+            }
+        });
     }, []);
 
     return (
         <AntForm.Item
-            name={props.props.name}
-            label={props.props.label}
-            required={props.props.required}
-            help={props.props.help}
-            tooltip={props.props.tooltip}
-            hidden={props.props.hidden}
+            name={props.name}
+            label={props.label}
+            required={props.required}
+            help={props.help}
+            tooltip={props.tooltip}
+            hidden={props.hidden}
         >
             {formItem}
         </AntForm.Item>

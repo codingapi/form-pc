@@ -58,8 +58,12 @@ const FormComponent: React.FC<FormProps> = (props) => {
                         layout={props.layout}
                     >
                         {fields.length > 0 && !props.display && fields.map((field) => {
+                            const itemRenderProps = {
+                                type: field.type,
+                                ...field.props,
+                            }
                             return (
-                                <FormItem {...field}/>
+                                <FormItem {...itemRenderProps} />
                             )
                         })}
 
