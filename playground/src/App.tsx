@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, message, Row} from "antd";
 import {Form} from "@codingapi/form-pc";
-import {FormDisplay, FormField, FormInstance} from "@codingapi/ui-framework";
+import {FormDisplay, FormField, FormInstance, ValidateUtils} from "@codingapi/ui-framework";
 
 const FooterButtons: React.FC<{ formInstance: FormInstance }> = ({formInstance}) => {
     const data = {
@@ -154,33 +154,73 @@ const App = () => {
             {
                 title: '原合同信息',
                 list: [
-                    [
-                        {
-                            fieldName: ['user', 'name'],
-                        },
-                        {
-                            fieldName: ['user', 'age'],
-                        },
-                    ],
-                    [
-                        {
-                            fieldName: ['user', 'password'],
-                        },
-                        {
-                            fieldName: ['user', 'checkbox'],
-                        },
-                        {
-                            fieldName: ['user', 'radio'],
-                        },
-                    ],
-                    [
-                        {
-                            fieldName: ['user', 'rate'],
-                        },
-                        {
-                            fieldName: ['user', 'date'],
-                        },
-                    ],
+                    {
+                        height:100,
+                        rows:[
+                            {
+                                fieldName: ['user', 'name'],
+                            },
+                            {
+                                fieldName: ['user', 'age'],
+                            },
+                        ]
+                    },
+                    {
+                        height:100,
+                        rows: [
+                            {
+                                fieldName: ['user', 'password'],
+                            },
+                            {
+                                fieldName: ['user', 'checkbox'],
+                            },
+                            {
+                                fieldName: ['user', 'radio'],
+                            },
+                        ],
+                    },
+                    {
+                        height:100,
+                        rows: [
+                            {
+                                fieldName: ['user', 'slider'],
+                            },
+                            {
+                                fieldName: ['user', 'switch'],
+                            },
+                            {
+                                fieldName: ['user', 'textarea'],
+                            },
+                        ],
+                    },
+                    {
+                        height:100,
+                        rows: [
+                            {
+                                fieldName: ['user', 'date'],
+                            },
+                            {
+                                fieldName: ['user', 'cascader'],
+                            },
+                            {
+                                fieldName: ['user', 'select'],
+                            },
+                        ],
+                    },
+                    {
+                        height:100,
+                        rows: [
+                            {
+                                fieldName: ['user', 'avatar'],
+                            },
+                            {
+                                fieldName: ['user', 'color'],
+                            },
+                            {
+                                fieldName: ['user', 'ideCode'],
+                            },
+                        ],
+                    }
                 ]
             }
         ]
@@ -199,7 +239,7 @@ const App = () => {
                     if (value) {
                         return []
                     }
-                    return ['姓名不能为空']
+                    return ['姓名不能为空111']
                 }
             }
         },
@@ -255,13 +295,7 @@ const App = () => {
                     {label: '选项2', value: '2'},
                     {label: '选项3', value: '3'},
                 ],
-                validateFunction: async (content) => {
-                    const value = content.value;
-                    if (value) {
-                        return []
-                    }
-                    return ['银行卡密码不能为空']
-                }
+                validateFunction: ValidateUtils.validateNotEmpty
             }
         },
         {
