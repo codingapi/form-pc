@@ -3,7 +3,7 @@ import {Button, message, Row} from "antd";
 import {Form} from "@codingapi/form-pc";
 import {FormField, FormInstance} from "@codingapi/ui-framework";
 import {TableForm} from "@/TableForm";
-import {FormInput} from "../../src";
+import {FormInput, FormSelect, FormSlider, FormStepper, FormTextArea} from "../../src";
 
 const FooterButtons: React.FC<{ formInstance: FormInstance }> = ({formInstance}) => {
     const data = {
@@ -374,47 +374,43 @@ const App = () => {
 
     useEffect(() => {
         leftFormInstance.setFieldsValue({
-            user: '张三'
+            user: '张三',
+            id: '123456'
         })
     }, []);
 
     return (
         <>
             <Button onClick={()=>{
-                leftFormInstance.submit();
+                const values= leftFormInstance.getFieldsValue();
+                console.log(values);
             }}>submit</Button>
             <Row>
 
-
-                {/*<TableForm*/}
-                {/*    formInstance={leftFormInstance}*/}
-                {/*>*/}
-                {/*    <TableForm.Item*/}
-                {/*        span={12}*/}
-                {/*        name={"name"}*/}
-                {/*        label={"姓名"}*/}
-                {/*    >*/}
-                {/*       <FormInput/>*/}
-                {/*    </TableForm.Item>*/}
-                {/*</TableForm>*/}
-
                 <TableForm
+                    header={{ title: "基本信息" }}
                     formInstance={leftFormInstance}
                 >
-                    <Form.Item
-                        name={"id"}
-                        hidden={true}
-                    >
-                        <FormInput/>
-                    </Form.Item>
-
-                    <TableForm.Item
-                        name={'user'}
-                        label={"用户信息"}
-                        required={true}
-                        span={6}
-                    >
-                        <FormInput/>
+                    <TableForm.Item label="姓名" name="name" required span={24}>
+                        <FormInput />
+                    </TableForm.Item>
+                    <TableForm.Item label="年龄" name="age" span={12}>
+                        <FormStepper />
+                    </TableForm.Item>
+                    <TableForm.Item label="备注" name="remark" span={12}>
+                        <FormTextArea/>
+                    </TableForm.Item>
+                    <TableForm.Item label="滑块" name="slider" span={12}>
+                        <FormSlider />
+                    </TableForm.Item>
+                    <TableForm.Item label="选择" name="select" span={12}>
+                        <FormSelect
+                            options={[
+                                { label: '选项1', value: '1' },
+                                { label: '选项2', value: '2' },
+                                { label: '选项3', value: '3' }
+                            ]}
+                        />
                     </TableForm.Item>
                 </TableForm>
             </Row>
