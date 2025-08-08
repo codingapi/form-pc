@@ -306,6 +306,43 @@ const FormDisplayRender: React.FC<FormDisplayRenderProps> = (props) => {
                     .ant-form-item-row{
                       width:100%;
                     }
+
+                    /* 表格边框样式 - 使用更强的优先级 */
+                    .table-container {
+                        border: 2px solid #d9d9d9 !important;
+                        border-radius: 6px !important;
+                        overflow: hidden !important;
+                        background-color: #fff !important;
+                    }
+
+                    .ant-row.table-row {
+                        border-bottom: 2px solid #d9d9d9 !important;
+                        margin: 0 !important;
+                    }
+
+                    .ant-row.table-row:last-child {
+                        border-bottom: none !important;
+                    }
+
+                    .ant-col.table-cell {
+                        border-right: 2px solid #d9d9d9 !important;
+                        padding: 0 !important;
+                    }
+
+                    .ant-col.table-cell:last-child {
+                        border-right: none !important;
+                    }
+
+                    /* 确保表格单元格内容正确显示 */
+                    .table-cell-content {
+                        border-right: 2px solid #d9d9d9 !important;
+                        height: 100% !important;
+                        display: flex !important;
+                    }
+
+                    .table-cell-content:last-child {
+                        border-right: none !important;
+                    }
                 `}
             </style>
 
@@ -350,12 +387,26 @@ const FormDisplayRender: React.FC<FormDisplayRenderProps> = (props) => {
                             transform: isCollapsed ? 'translateY(-10px)' : 'translateY(0)',
                         }}>
                             <div style={styles.sectionContent}>
-                                <div style={styles.tableContainer}>
-                                    {section.list?.map((row: any[], rowIndex: number) => {
+                                <div style={styles.tableContainer} className="table-container">
+                                    {section.list?.map((rowData: any, rowIndex: number) => {
+                                        // 适配新的数据格式：{height: 100, rows: [field1, field2]}
+                                        console.log('rowData:', rowData);
+                                        const row = rowData.rows || rowData; // 兼容旧格式
+                                        const rowHeight = rowData.height || 48; // 使用指定高度或默认48px
                                         const columnCount = row.length;
+                                        const isLastRow = rowIndex === section.list.length - 1;
+                                        console.log('row:', row, 'rowHeight:', rowHeight, 'columnCount:', columnCount);
 
                                         return (
-                                            <Row key={rowIndex} style={styles.tableRow} gutter={0}>
+                                            <Row key={rowIndex}
+                                                 className="table-row"
+                                                 style={{
+                                                     ...styles.tableRow,
+                                                     minHeight: `${rowHeight}px`,
+                                                     height: `${rowHeight}px`,
+                                                     borderBottom: isLastRow ? 'none' : '2px solid #d9d9d9'
+                                                 }}
+                                                 gutter={0}>
                                                 {row.map((field: any, fieldIndex: number) => {
                                                     const formField = loadField(field.fieldName);
                                                     if (!formField) return null;
@@ -385,22 +436,45 @@ const FormDisplayRender: React.FC<FormDisplayRenderProps> = (props) => {
 
                                                         // 计算Col的span，根据列数平均分配
                                                         const colSpan = 24 / columnCount;
+                                                        const isLastColumn = fieldIndex === row.length - 1;
 
                                                         return (
                                                             <Col key={fieldIndex}
                                                                  span={colSpan}
-                                                                 style={styles.tableCell}>
-                                                                <div style={styles.tableCellLabel}>
-                                                                    {formField.props.required && (
-                                                                        <span style={styles.requiredStar}>*</span>
-                                                                    )}
-                                                                    {label}
-                                                                </div>
-                                                                <div style={styles.tableCellValue}>
-                                                                   <FormItemRender
-                                                                       field={formField}
-                                                                       children={newChildren}
-                                                                   />
+                                                                 className="table-cell"
+                                                                 style={{
+                                                                     padding: 0,
+                                                                     minHeight: `${rowHeight}px`,
+                                                                     height: `${rowHeight}px`
+                                                                 }}>
+                                                                <div
+                                                                    className="table-cell-content"
+                                                                    style={{
+                                                                        ...styles.tableCell,
+                                                                        minHeight: `${rowHeight}px`,
+                                                                        height: `${rowHeight}px`,
+                                                                        borderRight: isLastColumn ? 'none' : '2px solid #d9d9d9'
+                                                                    }}>
+                                                                    <div style={{
+                                                                        ...styles.tableCellLabel,
+                                                                        minHeight: `${rowHeight}px`,
+                                                                        height: `${rowHeight}px`
+                                                                    }}>
+                                                                        {formField.props.required && (
+                                                                            <span style={styles.requiredStar}>*</span>
+                                                                        )}
+                                                                        {label}
+                                                                    </div>
+                                                                    <div style={{
+                                                                        ...styles.tableCellValue,
+                                                                        minHeight: `${rowHeight}px`,
+                                                                        height: `${rowHeight}px`
+                                                                    }}>
+                                                                        <FormItemRender
+                                                                            field={formField}
+                                                                            children={newChildren}
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </Col>
                                                         );
@@ -482,22 +556,22 @@ const styles = {
     },
     tableContainer: {
         width: '100%',
-        border: '1px solid #d9d9d9',
+        border: '2px solid #d9d9d9',
         borderCollapse: 'collapse' as const,
+        borderRadius: '6px',
+        overflow: 'hidden',
+        backgroundColor: '#fff',
     },
     tableRow: {
         display: 'flex',
         width: '100%',
-        borderBottom: '1px solid #d9d9d9',
+        borderBottom: '2px solid #d9d9d9',
     },
     tableCell: {
-        border: '1px solid #d9d9d9',
-        borderTop: 'none',
-        borderBottom: 'none',
+        borderRight: '2px solid #d9d9d9',
         display: 'flex',
         flexDirection: 'row' as const,
         padding: 0,
-        height: '48px',
         minHeight: '48px',
         alignItems: 'center',
     },
@@ -509,26 +583,22 @@ const styles = {
         backgroundColor: '#f5f5f5',
         padding: '12px 12px',
         fontWeight: '400',
-        borderRight: '1px solid #d9d9d9',
-        height: '48px',
+        borderRight: '2px solid #d9d9d9',
         minHeight: '48px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         boxSizing: 'border-box' as const,
         flexShrink: 0,
-        border: 'none',
     },
     tableCellValue: {
         flex: 1,
         padding: '6px 12px',
         backgroundColor: '#fff',
-        height: '48px',
         minHeight: '48px',
         display: 'flex',
         alignItems: 'center',
         boxSizing: 'border-box' as const,
-        border: 'none',
     },
     formItemContainer: {
         position: 'relative' as const,
@@ -556,3 +626,5 @@ const styles = {
 } as const;
 
 export default FormDisplayRender;
+
+

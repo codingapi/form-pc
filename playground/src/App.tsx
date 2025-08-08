@@ -1,7 +1,8 @@
 import React from 'react';
 import {Button, Col, message, Row} from "antd";
 import {Form, FormItem} from "@codingapi/form-pc";
-import {FormField, FormInstance} from "@codingapi/ui-framework";
+import {FormDisplay, FormField, FormInstance} from "@codingapi/ui-framework";
+import FormItemDisplay from "@/display";
 
 const FooterButtons: React.FC<{ formInstance: FormInstance }> = ({formInstance}) => {
     const data = {
@@ -370,9 +371,50 @@ const App = () => {
         },
     ] as FormField[];
 
+    const display = {
+        header: {
+            title: '合同起草流程',
+            left: 'XXX部门，张三',
+            right: '2023-10-01 12:00:00',
+        },
+        body: [
+            {
+                title: '原合同信息',
+                list: [
+                    {
+                        height:100,
+                        rows: [
+                            {
+                                fieldName: ['user','name'],
+                            },
+                            {
+                                fieldName: ['user','name'],
+                            },
+                        ]
+                    },
+                    {
+                        height:100,
+                        rows: [
+                            {
+                                fieldName: ['user','name'],
+                            },
+                        ],
+                    }
+                ]
+            }
+        ]
+    } as FormDisplay;
 
     return (
         <>
+            <Row>
+               <Form>
+                   <FormItemDisplay
+                       display={display}
+                       fields={fields}
+                   />
+               </Form>
+            </Row>
             <Row gutter={[24, 24]}>
                 <Col span={12}>
                     <Form
