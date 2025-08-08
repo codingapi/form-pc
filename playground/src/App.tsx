@@ -1,8 +1,9 @@
-import React from 'react';
-import {Button, Col, message, Row} from "antd";
-import {Form, FormItem} from "@codingapi/form-pc";
-import {FormDisplay, FormField, FormInstance} from "@codingapi/ui-framework";
-import FormItemDisplay from "@/display";
+import React, {useEffect} from 'react';
+import {Button, message, Row} from "antd";
+import {Form} from "@codingapi/form-pc";
+import {FormField, FormInstance} from "@codingapi/ui-framework";
+import {TableForm} from "@/TableForm";
+import {FormInput} from "../../src";
 
 const FooterButtons: React.FC<{ formInstance: FormInstance }> = ({formInstance}) => {
     const data = {
@@ -371,307 +372,309 @@ const App = () => {
         },
     ] as FormField[];
 
-    const display = {
-        header: {
-            title: '合同起草流程',
-            left: 'XXX部门，张三',
-            right: '2023-10-01 12:00:00',
-        },
-        body: [
-            {
-                title: '原合同信息',
-                list: [
-                    {
-                        height:100,
-                        rows: [
-                            {
-                                fieldName: ['user','name'],
-                            },
-                            {
-                                fieldName: ['user','name'],
-                            },
-                        ]
-                    },
-                    {
-                        height:100,
-                        rows: [
-                            {
-                                fieldName: ['user','name'],
-                            },
-                        ],
-                    }
-                ]
-            }
-        ]
-    } as FormDisplay;
+    useEffect(() => {
+        leftFormInstance.setFieldsValue({
+            user: '张三'
+        })
+    }, []);
 
     return (
         <>
+            <Button onClick={()=>{
+                leftFormInstance.submit();
+            }}>submit</Button>
             <Row>
-               <Form>
-                   <FormItemDisplay
-                       display={display}
-                       fields={fields}
-                   />
-               </Form>
-            </Row>
-            <Row gutter={[24, 24]}>
-                <Col span={12}>
-                    <Form
-                        form={leftFormInstance}
-                        layout={"horizontal"}
-                        onFinish={async (values) => {
-                            message.success(JSON.stringify(values));
-                        }}
-                        footer={(
-                            <FooterButtons
-                                formInstance={leftFormInstance}
-                            />
-                        )}
+
+
+                {/*<TableForm*/}
+                {/*    formInstance={leftFormInstance}*/}
+                {/*>*/}
+                {/*    <TableForm.Item*/}
+                {/*        span={12}*/}
+                {/*        name={"name"}*/}
+                {/*        label={"姓名"}*/}
+                {/*    >*/}
+                {/*       <FormInput/>*/}
+                {/*    </TableForm.Item>*/}
+                {/*</TableForm>*/}
+
+                <TableForm
+                    formInstance={leftFormInstance}
+                >
+                    <Form.Item
+                        name={"id"}
+                        hidden={true}
                     >
-                        <FormItem
-                            required={true}
-                            name={["user", "name"]}
-                            label={"姓名"}
-                            placeholder={"请输入姓名"}
-                            type={'input'}
-                            validateFunction={async (content) => {
-                                const value = content.value;
-                                if (value) {
-                                    return []
-                                }
-                                return ['姓名不能为空']
-                            }}
-                        >
-                        </FormItem>
+                        <FormInput/>
+                    </Form.Item>
 
-
-                        <FormItem
-                            required={true}
-                            name={["user", "age"]}
-                            label={"年龄"}
-                            type={"stepper"}
-                            placeholder={"请输入年龄"}
-                        >
-                        </FormItem>
-
-
-                        <FormItem
-                            required={true}
-                            name={["user", "password"]}
-                            label={"银行卡密码"}
-                            type={"password"}
-                            placeholder={"请输入银行卡密码"}
-                            validateFunction={async (content) => {
-                                const value = content.value;
-                                if (value) {
-                                    return []
-                                }
-                                return ['银行卡密码不能为空']
-                            }}
-                        >
-                        </FormItem>
-
-                        <FormItem
-                            required={true}
-                            name={["user", "code"]}
-                            label={"银行卡验证码"}
-                            type={"captcha"}
-                            placeholder={"请输入银行卡验证码"}
-                            onCaptchaRefresh={async () => {
-                                console.log('refresh captcha')
-                                return {
-                                    url: '/captcha.jpeg',
-                                    code: '123'
-                                }
-                            }}
-                        >
-                        </FormItem>
-
-
-                        <FormItem
-                            required={true}
-                            name={["user", "checkbox"]}
-                            label={"复选框"}
-                            type={"checkbox"}
-                            selectMultiple={true}
-                            options={[
-                                {label: '选项1', value: '1'},
-                                {label: '选项2', value: '2'},
-                                {label: '选项3', value: '3'},
-                            ]}
-                        >
-                        </FormItem>
-
-                        <FormItem
-                            required={true}
-                            name={["user", "radio"]}
-                            label={"单选框"}
-                            type={"radio"}
-                            options={[
-                                {label: '选项1', value: '1'},
-                                {label: '选项2', value: '2'},
-                                {label: '选项3', value: '3'},
-                            ]}
-                        >
-                        </FormItem>
-
-                        <FormItem
-                            required={true}
-                            name={["user", "rate"]}
-                            label={"评分"}
-                            type={'rate'}
-                        />
-
-
-                        <FormItem
-                            required={true}
-                            name={["user", "slider"]}
-                            label={"滑块"}
-                            type={'slider'}
-                            sliderPopover={true}
-                        >
-                        </FormItem>
-
-                        <FormItem
-                            required={true}
-                            name={["user", "switch"]}
-                            label={"开关"}
-                            type={"switch"}
-                        />
-
-                        <FormItem
-                            required={true}
-                            name={["user", "textarea"]}
-                            label={"文本域"}
-                            type={'textarea'}
-                        />
-
-                        <FormItem
-                            required={true}
-                            name={["user", "date"]}
-                            label={"日期"}
-                            type={"date"}
-                        />
-
-                        <FormItem
-                            required={true}
-                            name={["user", "cascader"]}
-                            label={"级联选择"}
-                            options={[
-                                {
-                                    label: '选项1',
-                                    value: '1',
-                                    children: [
-                                        {
-                                            label: '选项1-1',
-                                            value: '1-1',
-                                            children: [
-                                                {
-                                                    label: '选项1-1-1',
-                                                    value: '1-1-1',
-                                                },
-                                                {
-                                                    label: '选项1-1-2',
-                                                    value: '1-1-2',
-                                                },
-                                            ]
-                                        },
-                                        {
-                                            label: '选项1-2',
-                                            value: '1-2',
-                                        },
-                                    ]
-                                },
-                                {
-                                    label: '选项2',
-                                    value: '2',
-                                    children: [
-                                        {
-                                            label: '选项2-1',
-                                            value: '2-1',
-                                        },
-                                        {
-                                            label: '选项2-2',
-                                            value: '2-2',
-                                        },
-                                    ]
-                                },
-                            ]}
-                            type={'cascader'}
-                        >
-                        </FormItem>
-
-                        <FormItem
-                            required={true}
-                            name={["user", "select"]}
-                            label={"选择器"}
-                            selectMultiple={true}
-                            type={'select'}
-                            options={[
-                                {
-                                    label: '选项1', value: '1',
-                                    children: [
-                                        {
-                                            label: '选项1-1',
-                                            value: '1-1',
-                                            children: [
-                                                {label: '选项1-1-1', value: '1-1-1'},
-                                                {label: '选项1-1-2', value: '1-1-2'},
-                                            ]
-                                        },
-                                        {label: '选项1-2', value: '1-2'},
-                                    ]
-                                },
-                                {label: '选项2', value: '2'},
-                                {label: '选项3', value: '3'},
-                            ]}
-                        >
-                        </FormItem>
-
-
-                        <FormItem
-                            required={true}
-                            name={["user", "avatar"]}
-                            label={"头像"}
-                            type={"uploader"}
-                        >
-                        </FormItem>
-
-                        <FormItem
-                            required={true}
-                            name={["user", "color"]}
-                            label={"颜色"}
-                            type={"color"}
-                        />
-
-                        <FormItem
-                            required={true}
-                            name={["user", "ideCode"]}
-                            label={"代码"}
-                            type={'code'}
-                        />
-                    </Form>
-                </Col>
-
-                <Col span={12}>
-                    <Form
-                        onFinish={async (values) => {
-                            message.success(JSON.stringify(values));
-                        }}
-                        form={rightFormInstance}
-                        footer={(
-                            <FooterButtons
-                                formInstance={rightFormInstance}
-                            />
-                        )}
-                        loadFields={async () => {
-                            return fields;
-                        }}
+                    <TableForm.Item
+                        name={'user'}
+                        label={"用户信息"}
+                        required={true}
+                        span={6}
                     >
-                    </Form>
-                </Col>
+                        <FormInput/>
+                    </TableForm.Item>
+                </TableForm>
             </Row>
+            {/*<Row gutter={[24, 24]}>*/}
+            {/*    <Col span={12}>*/}
+            {/*        <Form*/}
+            {/*            form={leftFormInstance}*/}
+            {/*            layout={"horizontal"}*/}
+            {/*            onFinish={async (values) => {*/}
+            {/*                message.success(JSON.stringify(values));*/}
+            {/*            }}*/}
+            {/*            footer={(*/}
+            {/*                <FooterButtons*/}
+            {/*                    formInstance={leftFormInstance}*/}
+            {/*                />*/}
+            {/*            )}*/}
+            {/*        >*/}
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "name"]}*/}
+            {/*                label={"姓名"}*/}
+            {/*                placeholder={"请输入姓名"}*/}
+            {/*                type={'input'}*/}
+            {/*                validateFunction={async (content) => {*/}
+            {/*                    const value = content.value;*/}
+            {/*                    if (value) {*/}
+            {/*                        return []*/}
+            {/*                    }*/}
+            {/*                    return ['姓名不能为空']*/}
+            {/*                }}*/}
+            {/*            >*/}
+            {/*            </FormItem>*/}
+
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "age"]}*/}
+            {/*                label={"年龄"}*/}
+            {/*                type={"stepper"}*/}
+            {/*                placeholder={"请输入年龄"}*/}
+            {/*            >*/}
+            {/*            </FormItem>*/}
+
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "password"]}*/}
+            {/*                label={"银行卡密码"}*/}
+            {/*                type={"password"}*/}
+            {/*                placeholder={"请输入银行卡密码"}*/}
+            {/*                validateFunction={async (content) => {*/}
+            {/*                    const value = content.value;*/}
+            {/*                    if (value) {*/}
+            {/*                        return []*/}
+            {/*                    }*/}
+            {/*                    return ['银行卡密码不能为空']*/}
+            {/*                }}*/}
+            {/*            >*/}
+            {/*            </FormItem>*/}
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "code"]}*/}
+            {/*                label={"银行卡验证码"}*/}
+            {/*                type={"captcha"}*/}
+            {/*                placeholder={"请输入银行卡验证码"}*/}
+            {/*                onCaptchaRefresh={async () => {*/}
+            {/*                    console.log('refresh captcha')*/}
+            {/*                    return {*/}
+            {/*                        url: '/captcha.jpeg',*/}
+            {/*                        code: '123'*/}
+            {/*                    }*/}
+            {/*                }}*/}
+            {/*            >*/}
+            {/*            </FormItem>*/}
+
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "checkbox"]}*/}
+            {/*                label={"复选框"}*/}
+            {/*                type={"checkbox"}*/}
+            {/*                selectMultiple={true}*/}
+            {/*                options={[*/}
+            {/*                    {label: '选项1', value: '1'},*/}
+            {/*                    {label: '选项2', value: '2'},*/}
+            {/*                    {label: '选项3', value: '3'},*/}
+            {/*                ]}*/}
+            {/*            >*/}
+            {/*            </FormItem>*/}
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "radio"]}*/}
+            {/*                label={"单选框"}*/}
+            {/*                type={"radio"}*/}
+            {/*                options={[*/}
+            {/*                    {label: '选项1', value: '1'},*/}
+            {/*                    {label: '选项2', value: '2'},*/}
+            {/*                    {label: '选项3', value: '3'},*/}
+            {/*                ]}*/}
+            {/*            >*/}
+            {/*            </FormItem>*/}
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "rate"]}*/}
+            {/*                label={"评分"}*/}
+            {/*                type={'rate'}*/}
+            {/*            />*/}
+
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "slider"]}*/}
+            {/*                label={"滑块"}*/}
+            {/*                type={'slider'}*/}
+            {/*                sliderPopover={true}*/}
+            {/*            >*/}
+            {/*            </FormItem>*/}
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "switch"]}*/}
+            {/*                label={"开关"}*/}
+            {/*                type={"switch"}*/}
+            {/*            />*/}
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "textarea"]}*/}
+            {/*                label={"文本域"}*/}
+            {/*                type={'textarea'}*/}
+            {/*            />*/}
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "date"]}*/}
+            {/*                label={"日期"}*/}
+            {/*                type={"date"}*/}
+            {/*            />*/}
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "cascader"]}*/}
+            {/*                label={"级联选择"}*/}
+            {/*                options={[*/}
+            {/*                    {*/}
+            {/*                        label: '选项1',*/}
+            {/*                        value: '1',*/}
+            {/*                        children: [*/}
+            {/*                            {*/}
+            {/*                                label: '选项1-1',*/}
+            {/*                                value: '1-1',*/}
+            {/*                                children: [*/}
+            {/*                                    {*/}
+            {/*                                        label: '选项1-1-1',*/}
+            {/*                                        value: '1-1-1',*/}
+            {/*                                    },*/}
+            {/*                                    {*/}
+            {/*                                        label: '选项1-1-2',*/}
+            {/*                                        value: '1-1-2',*/}
+            {/*                                    },*/}
+            {/*                                ]*/}
+            {/*                            },*/}
+            {/*                            {*/}
+            {/*                                label: '选项1-2',*/}
+            {/*                                value: '1-2',*/}
+            {/*                            },*/}
+            {/*                        ]*/}
+            {/*                    },*/}
+            {/*                    {*/}
+            {/*                        label: '选项2',*/}
+            {/*                        value: '2',*/}
+            {/*                        children: [*/}
+            {/*                            {*/}
+            {/*                                label: '选项2-1',*/}
+            {/*                                value: '2-1',*/}
+            {/*                            },*/}
+            {/*                            {*/}
+            {/*                                label: '选项2-2',*/}
+            {/*                                value: '2-2',*/}
+            {/*                            },*/}
+            {/*                        ]*/}
+            {/*                    },*/}
+            {/*                ]}*/}
+            {/*                type={'cascader'}*/}
+            {/*            >*/}
+            {/*            </FormItem>*/}
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "select"]}*/}
+            {/*                label={"选择器"}*/}
+            {/*                selectMultiple={true}*/}
+            {/*                type={'select'}*/}
+            {/*                options={[*/}
+            {/*                    {*/}
+            {/*                        label: '选项1', value: '1',*/}
+            {/*                        children: [*/}
+            {/*                            {*/}
+            {/*                                label: '选项1-1',*/}
+            {/*                                value: '1-1',*/}
+            {/*                                children: [*/}
+            {/*                                    {label: '选项1-1-1', value: '1-1-1'},*/}
+            {/*                                    {label: '选项1-1-2', value: '1-1-2'},*/}
+            {/*                                ]*/}
+            {/*                            },*/}
+            {/*                            {label: '选项1-2', value: '1-2'},*/}
+            {/*                        ]*/}
+            {/*                    },*/}
+            {/*                    {label: '选项2', value: '2'},*/}
+            {/*                    {label: '选项3', value: '3'},*/}
+            {/*                ]}*/}
+            {/*            >*/}
+            {/*            </FormItem>*/}
+
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "avatar"]}*/}
+            {/*                label={"头像"}*/}
+            {/*                type={"uploader"}*/}
+            {/*            >*/}
+            {/*            </FormItem>*/}
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "color"]}*/}
+            {/*                label={"颜色"}*/}
+            {/*                type={"color"}*/}
+            {/*            />*/}
+
+            {/*            <FormItem*/}
+            {/*                required={true}*/}
+            {/*                name={["user", "ideCode"]}*/}
+            {/*                label={"代码"}*/}
+            {/*                type={'code'}*/}
+            {/*            />*/}
+            {/*        </Form>*/}
+            {/*    </Col>*/}
+
+            {/*    <Col span={12}>*/}
+            {/*        <Form*/}
+            {/*            onFinish={async (values) => {*/}
+            {/*                message.success(JSON.stringify(values));*/}
+            {/*            }}*/}
+            {/*            form={rightFormInstance}*/}
+            {/*            footer={(*/}
+            {/*                <FooterButtons*/}
+            {/*                    formInstance={rightFormInstance}*/}
+            {/*                />*/}
+            {/*            )}*/}
+            {/*            loadFields={async () => {*/}
+            {/*                return fields;*/}
+            {/*            }}*/}
+            {/*        >*/}
+            {/*        </Form>*/}
+            {/*    </Col>*/}
+            {/*</Row>*/}
 
         </>
     );

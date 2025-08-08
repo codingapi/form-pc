@@ -12,12 +12,13 @@ import {
 import {ConfigProvider, Form as AntForm} from "antd";
 import {FormContext} from "./context";
 import "./index.scss";
-import {registerDefaultFormItems} from "./register";
 import {FormItem} from "./item";
 import FormDisplayRender from "./display";
+import {registerDefaultFormItems} from "./register";
+
+registerDefaultFormItems();
 
 const FormComponent: React.FC<FormProps> = (props) => {
-    registerDefaultFormItems();
     props.registerFormItems && props.registerFormItems();
 
     const formInstance = props.form ? props.form : new FormInstance();

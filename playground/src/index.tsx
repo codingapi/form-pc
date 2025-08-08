@@ -17,13 +17,11 @@ const theme = {
     }
 } as ThemeConfig;
 root.render(
-  <React.StrictMode>
     <ThemeProvider theme={theme}>
         <ConfigProvider theme={theme}>
             <App />
         </ConfigProvider>
     </ThemeProvider>
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

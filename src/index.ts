@@ -20,5 +20,6 @@ export * from './Form/uploder';
 export * from './Form/index';
 export * from './Form/item';
 export * from './Form/common';
+export * from './Form/register';
 export * from './Descriptions';
 export * from "./LazyComponent";
