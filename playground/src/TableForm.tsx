@@ -1,5 +1,5 @@
 import React from "react";
-import {FormInstance, FormRule, NamePath} from "@codingapi/ui-framework";
+import {FormInstance, FormRule, loadRules, NamePath} from "@codingapi/ui-framework";
 import {Form, formFieldInit} from "@codingapi/form-pc";
 
 interface TableFormProps {
@@ -15,13 +15,14 @@ interface TableFormProps {
 }
 
 
-const TableFormItem:React.FC<TableFormComponentItemProps> = (props)=>{
+const TableFormItem: React.FC<TableFormComponentItemProps> = (props) => {
+    const rules = loadRules(props);
     return (
         <Form.Item
             name={props.name}
             required={props.required}
             style={{marginBottom: 0}}
-            rules={props.rules}
+            rules={rules}
             hidden={props.hidden}
         >
             {React.cloneElement(props.children as any, {
@@ -101,8 +102,12 @@ export const TableFormComponent: React.FC<TableFormProps> = (props) => {
                                             {item.props.required &&
                                                 <span style={{color: 'red', marginLeft: 4}}>*</span>}
                                         </td>
-                                        <td colSpan={colSpan - 1} style={{padding: 8, border: '1px solid #e8e8e8'}}>
-                                           <TableFormItem {...item.props} />
+                                        <td
+                                            colSpan={colSpan - 1}
+                                            style={{padding: 8, border: '1px solid #e8e8e8'}}>
+                                            <TableFormItem
+                                                {...item.props}
+                                            />
                                         </td>
                                     </React.Fragment>
                                 );

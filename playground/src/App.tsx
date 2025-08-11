@@ -45,18 +45,17 @@ const App = () => {
                     <TableForm.Item
                         label="姓名"
                         name="name"
-                        required
+                        required={true}
                         span={24}
-                        rules={[
-                            {
-                                required: true,
-                                message: '请输入姓名',
-                            },
-                        ]}
                     >
                         <FormInput/>
                     </TableForm.Item>
-                    <TableForm.Item label="年龄" name="age" span={12}>
+                    <TableForm.Item
+                        label="年龄"
+                        name="age"
+                        span={12}
+                        required
+                    >
                         <FormStepper/>
                     </TableForm.Item>
                     <TableForm.Item label="备注" name="remark" span={12}>

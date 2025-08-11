@@ -6,6 +6,7 @@ import {
     FormInstance,
     FormProps,
     FormRule,
+    loadRules,
     NamePath,
     ThemeConfig,
     ThemeProvider,
@@ -116,6 +117,8 @@ interface $FormItemProps {
 const $FormItem: React.FC<$FormItemProps> = (props) => {
 
     const child = props.children;
+    const rules = loadRules(props);
+
     if (React.isValidElement(child)) {
         // @ts-ignore
         const type = child.type.displayName;
@@ -141,7 +144,7 @@ const $FormItem: React.FC<$FormItemProps> = (props) => {
             required={props.required}
             tooltip={props.tooltip}
             style={props.style}
-            rules={props.rules}
+            rules={rules}
         >
             {props.children}
         </AntForm.Item>

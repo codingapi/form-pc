@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {Form as AntForm} from "antd";
-import {FormFactory, FormItemProps} from "@codingapi/ui-framework";
+import {FormFactory, FormItemProps, loadRules} from "@codingapi/ui-framework";
 import {formFieldInit} from "./common";
 
 
@@ -16,6 +16,8 @@ export const FormItem:React.FC<FormItemRenderProps> = (props)=>{
         }
     }) as React.ReactNode;
     const {formContext} = formFieldInit(props.name);
+
+    const rules = loadRules(props);
 
     useEffect(() => {
         formContext?.addFormField({
@@ -34,7 +36,7 @@ export const FormItem:React.FC<FormItemRenderProps> = (props)=>{
             help={props.help}
             tooltip={props.tooltip}
             hidden={props.hidden}
-            rules={props.rules}
+            rules={rules}
         >
             {formItem}
         </AntForm.Item>
