@@ -19,9 +19,9 @@ import FormDisplayRender from "./display";
 import {registerDefaultFormItems} from "./register";
 import {formFieldInit} from "./common";
 
-registerDefaultFormItems();
-
 const FormComponent: React.FC<FormProps> = (props) => {
+    registerDefaultFormItems();
+
     props.registerFormItems && props.registerFormItems();
 
     const formInstance = props.form ? props.form : new FormInstance();
@@ -119,10 +119,8 @@ const $FormItem: React.FC<$FormItemProps> = (props) => {
     if (React.isValidElement(child)) {
         // @ts-ignore
         const type = child.type.displayName;
-        const {formContext} = formFieldInit({
-            ...props,
-            ...child.props,
-        });
+
+        const {formContext} = formFieldInit(props.name);
 
         useEffect(() => {
             formContext?.addFormField({
