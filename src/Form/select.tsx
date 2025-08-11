@@ -134,3 +134,4 @@ export const FormSelect: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormSelect.displayName = "select";

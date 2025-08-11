@@ -26,3 +26,4 @@ export const FormPassword: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormPassword.displayName = "password";

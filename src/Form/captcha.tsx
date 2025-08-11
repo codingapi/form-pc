@@ -53,4 +53,5 @@ export const FormCaptcha: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormCaptcha.displayName = "captcha";
 

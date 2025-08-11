@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {FormTypeProps} from "@codingapi/ui-framework";
 import {Input} from "antd";
 import "./index.scss";
@@ -8,7 +8,6 @@ export const FormInput: React.FC<FormTypeProps> = (props) => {
 
     const inputType = props.inputType || "text";
     const formContext = useContext(FormContext) || undefined;
-
     return (
         <Input
             disabled={props.disabled}
@@ -27,3 +26,4 @@ export const FormInput: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormInput.displayName = "input";

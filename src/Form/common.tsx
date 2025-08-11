@@ -1,29 +1,17 @@
 import React, {useEffect} from "react";
-import {FormItemProps} from "@codingapi/ui-framework";
+import {NamePath} from "@codingapi/ui-framework";
 import {FormContext} from "./context";
 
-export const formFieldInit = (props: FormItemProps, reloadOption?: () => void) => {
+export const formFieldInit = (formName?: NamePath, reloadOption?: () => void) => {
     const formContext = React.useContext(FormContext) || undefined;
-    const formAction = formContext?.getFormAction();
-    const validateContext = formContext?.getFormValidateContext();
     const [random, setRandom] = React.useState(0);
 
     useEffect(() => {
-        if (props.validateFunction) {
-            if (validateContext) {
-                if (props.disabled || props.hidden) {
-                    // do nothing
-                } else {
-                    if(props.name) {
-                        validateContext.addValidateFunction(props.name, props.validateFunction);
-                    }
-                }
-            }
-        }
+
         const reloadContext = formContext?.getFormFieldReloadListenerContext();
         if (reloadContext) {
-            if(props.name) {
-                reloadContext.addListener(props.name, () => {
+            if (formName) {
+                reloadContext.addListener(formName, () => {
                     setRandom(Math.random);
                 });
             }
@@ -31,8 +19,8 @@ export const formFieldInit = (props: FormItemProps, reloadOption?: () => void) =
 
         const optionContext = formContext?.getFormFieldOptionListenerContext();
         if (optionContext) {
-            if(props.name) {
-                optionContext.addListener(props.name, () => {
+            if (formName) {
+                optionContext.addListener(formName, () => {
                     if (reloadOption) {
                         reloadOption();
                     }
@@ -41,5 +29,5 @@ export const formFieldInit = (props: FormItemProps, reloadOption?: () => void) =
         }
     }, [formContext]);
 
-    return {formContext, validateContext};
+    return {formContext};
 }

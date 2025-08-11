@@ -34,3 +34,4 @@ export const FormSlider: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormSlider.displayName = "slider";

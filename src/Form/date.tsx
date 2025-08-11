@@ -116,3 +116,4 @@ export const FormDate: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormDate.displayName = "date";

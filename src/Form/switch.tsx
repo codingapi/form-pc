@@ -35,3 +35,4 @@ export const FormSwitch: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormSwitch.displayName = "switch";

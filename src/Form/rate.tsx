@@ -32,3 +32,4 @@ export const FormRate: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormRate.displayName = "rate";

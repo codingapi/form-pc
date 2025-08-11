@@ -1,6 +1,6 @@
 import React from "react";
-import {FormInstance, NamePath} from "@codingapi/ui-framework";
-import {Form} from "@codingapi/form-pc";
+import {FormInstance, FormRole, NamePath} from "@codingapi/ui-framework";
+import {Form, formFieldInit} from "@codingapi/form-pc";
 
 interface TableFormProps {
     children: React.ReactNode;
@@ -14,6 +14,23 @@ interface TableFormProps {
     };
 }
 
+
+const TableFormItem:React.FC<TableFormComponentItemProps> = (props)=>{
+    return (
+        <Form.Item
+            name={props.name}
+            required={props.required}
+            style={{marginBottom: 0}}
+            rules={props.rules}
+            hidden={props.hidden}
+        >
+            {React.cloneElement(props.children as any, {
+                style: {width: '100%'},
+            })}
+        </Form.Item>
+    )
+}
+
 export const TableFormComponent: React.FC<TableFormProps> = (props) => {
     const items = React.Children.toArray(props.children) as React.ReactElement<TableFormComponentItemProps>[];
 
@@ -22,7 +39,29 @@ export const TableFormComponent: React.FC<TableFormProps> = (props) => {
     let currentRow: React.ReactElement[] = [];
     let currentSpan = 0;
 
+
+
     items.forEach((item) => {
+        if (React.isValidElement(item.props.children)) {
+            //@ts-ignore
+            const type = item.props.children.type.displayName;
+            const childProps = item.props.children.props;
+
+            const {formContext} = formFieldInit({
+                ...item.props,
+                ...childProps,
+            })
+            formContext?.addFormField(
+                {
+                    type: type,
+                    props: {
+                        ...item.props,
+                        ...childProps,
+                    }
+                }
+            );
+        }
+
         const span = item.props.span || 24;
         if (currentSpan + span > 24) {
             rows.push(currentRow);
@@ -45,10 +84,10 @@ export const TableFormComponent: React.FC<TableFormProps> = (props) => {
                 initialValues={props.initialValues}
             >
 
-                <table style={{ width: '100vw', borderCollapse: 'collapse' }}>
+                <table style={{width: '100vw', borderCollapse: 'collapse'}}>
                     <tbody>
                     {rows.map((row, rowIndex) => (
-                        <tr key={rowIndex} style={{ border: '1px solid #e8e8e8'}}>
+                        <tr key={rowIndex} style={{border: '1px solid #e8e8e8'}}>
                             {row.map((item, index) => {
                                 const span = item.props.span || 24;
                                 const colSpan = Math.floor((span / 24) * 24 * 2); // 两个td，label+control
@@ -63,18 +102,11 @@ export const TableFormComponent: React.FC<TableFormProps> = (props) => {
                                             border: '1px solid #e8e8e8'
                                         }}>
                                             {item.props.label}
-                                            {item.props.required && <span style={{ color: 'red', marginLeft: 4 }}>*</span>}
+                                            {item.props.required &&
+                                                <span style={{color: 'red', marginLeft: 4}}>*</span>}
                                         </td>
-                                        <td colSpan={colSpan - 1} style={{ padding: 8 , border: '1px solid #e8e8e8'}}>
-                                            <Form.Item
-                                                name={item.props.name}
-                                                required={item.props.required}
-                                                style={{ marginBottom: 0 }}
-                                            >
-                                                {React.cloneElement(item.props.children as any, {
-                                                    style: { width: '100%' },
-                                                })}
-                                            </Form.Item>
+                                        <td colSpan={colSpan - 1} style={{padding: 8, border: '1px solid #e8e8e8'}}>
+                                           <TableFormItem {...item.props} />
                                         </td>
                                     </React.Fragment>
                                 );
@@ -95,6 +127,7 @@ interface TableFormComponentItemProps {
     children: React.ReactNode;
     required?: boolean;
     hidden?: boolean;
+    rules?: FormRole[];
 }
 
 export const TableFormComponentItem: React.FC<TableFormComponentItemProps> = (_props) => {

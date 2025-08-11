@@ -27,3 +27,5 @@ export const FormCode: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+
+FormCode.displayName = "code";

@@ -4,7 +4,8 @@ import {
     AntdFormInstance,
     FormField,
     FormInstance,
-    FormProps,
+    FormProps, FormRole,
+    NamePath,
     ThemeConfig,
     ThemeProvider,
     ThemeProviderContext
@@ -15,6 +16,7 @@ import "./index.scss";
 import {FormItem} from "./item";
 import FormDisplayRender from "./display";
 import {registerDefaultFormItems} from "./register";
+import {formFieldInit} from "./common";
 
 registerDefaultFormItems();
 
@@ -68,8 +70,8 @@ const FormComponent: React.FC<FormProps> = (props) => {
                             )
                         })}
 
-                        {fields.length> 0 && props.display && (
-                            <FormDisplayRender display={props.display} fields={fields} />
+                        {fields.length > 0 && props.display && (
+                            <FormDisplayRender display={props.display} fields={fields}/>
                         )}
 
                         {props.children}
@@ -85,7 +87,7 @@ const FormComponent: React.FC<FormProps> = (props) => {
 type FormType = typeof FormComponent;
 type FormComponentType = FormType & {
     useForm: () => FormInstance;
-    Item: typeof AntForm.Item;
+    Item: typeof $FormItem;
 };
 
 export const Form = FormComponent as FormComponentType;
@@ -99,4 +101,52 @@ Form.useForm = () => {
     return new FormInstance();
 };
 
-Form.Item = AntForm.Item;
+interface $FormItemProps {
+    children: React.ReactNode;
+    name?: NamePath;
+    hidden?: boolean;
+    label?: React.ReactNode;
+    required?: boolean;
+    tooltip?: React.ReactNode;
+    style?: React.CSSProperties;
+    rules?: FormRole[];
+}
+
+const $FormItem: React.FC<$FormItemProps> = (props) => {
+
+    const child = props.children;
+    if (React.isValidElement(child)) {
+        // @ts-ignore
+        const type = child.type.displayName;
+        const {formContext} = formFieldInit({
+            ...props,
+            ...child.props,
+        });
+
+        useEffect(() => {
+            formContext?.addFormField({
+                type: type,
+                props: {
+                    ...child.props,
+                    ...props,
+                }
+            })
+        }, []);
+    }
+
+    return (
+        <AntForm.Item
+            name={props.name}
+            hidden={props.hidden}
+            label={props.label}
+            required={props.required}
+            tooltip={props.tooltip}
+            style={props.style}
+            rules={props.rules}
+        >
+            {props.children}
+        </AntForm.Item>
+    )
+}
+
+Form.Item = $FormItem;

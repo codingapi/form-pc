@@ -52,3 +52,4 @@ export const FormColor: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormColor.displayName = "color";

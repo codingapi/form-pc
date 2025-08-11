@@ -157,3 +157,5 @@ export const FormUploader: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+
+FormUploader.displayName = "uploader";

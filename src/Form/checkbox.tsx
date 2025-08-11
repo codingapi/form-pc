@@ -68,3 +68,4 @@ export const FormCheckbox: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormCheckbox.displayName = "checkbox";

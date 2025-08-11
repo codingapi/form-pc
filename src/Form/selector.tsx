@@ -82,3 +82,4 @@ export const FormSelector: React.FC<FormTypeProps> = (props) => {
     )
 }
 
+FormSelector.displayName = "selector";
