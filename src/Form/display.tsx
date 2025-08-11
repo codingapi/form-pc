@@ -15,7 +15,7 @@ interface FormItemRenderProps{
 
 const FormItemRender:React.FC<FormItemRenderProps> = (props)=>{
 
-    const {formContext} = formFieldInit(props.field.props);
+    const {formContext} = formFieldInit(props.field.props.name);
 
     useEffect(() => {
         formContext?.addFormField(props.field);

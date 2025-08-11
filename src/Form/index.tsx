@@ -4,7 +4,8 @@ import {
     AntdFormInstance,
     FormField,
     FormInstance,
-    FormProps, FormRole,
+    FormProps,
+    FormRule,
     NamePath,
     ThemeConfig,
     ThemeProvider,
@@ -109,7 +110,7 @@ interface $FormItemProps {
     required?: boolean;
     tooltip?: React.ReactNode;
     style?: React.CSSProperties;
-    rules?: FormRole[];
+    rules?: FormRule[];
 }
 
 const $FormItem: React.FC<$FormItemProps> = (props) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import {FormInstance, FormRole, NamePath} from "@codingapi/ui-framework";
+import {FormInstance, FormRule, NamePath} from "@codingapi/ui-framework";
 import {Form, formFieldInit} from "@codingapi/form-pc";
 
 interface TableFormProps {
@@ -39,18 +39,14 @@ export const TableFormComponent: React.FC<TableFormProps> = (props) => {
     let currentRow: React.ReactElement[] = [];
     let currentSpan = 0;
 
-
-
     items.forEach((item) => {
         if (React.isValidElement(item.props.children)) {
             //@ts-ignore
             const type = item.props.children.type.displayName;
             const childProps = item.props.children.props;
 
-            const {formContext} = formFieldInit({
-                ...item.props,
-                ...childProps,
-            })
+            const {formContext} = formFieldInit(type);
+
             formContext?.addFormField(
                 {
                     type: type,
@@ -127,7 +123,7 @@ interface TableFormComponentItemProps {
     children: React.ReactNode;
     required?: boolean;
     hidden?: boolean;
-    rules?: FormRole[];
+    rules?: FormRule[];
 }
 
 export const TableFormComponentItem: React.FC<TableFormComponentItemProps> = (_props) => {

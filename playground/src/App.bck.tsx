@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Button, Col, message, Row} from "antd";
-import {Form,FormItem} from "@codingapi/form-pc";
+import {Form, FormItem} from "@codingapi/form-pc";
 import {FormField, FormInstance} from "@codingapi/ui-framework";
 
 const FooterButtons: React.FC<{ formInstance: FormInstance }> = ({formInstance}) => {
@@ -495,7 +495,6 @@ const App = () => {
                             placeholder={"请输入年龄"}
                         >
                         </FormItem>
-
 
                         <FormItem
                             required={true}
