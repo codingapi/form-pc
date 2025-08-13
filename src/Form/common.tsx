@@ -2,12 +2,12 @@ import React, {useEffect} from "react";
 import {NamePath} from "@codingapi/ui-framework";
 import {FormContext} from "./context";
 
-export const formFieldInit = (formName?: NamePath, reloadOption?: () => void) => {
+export const formFieldInit = (formName?: NamePath) => {
     const formContext = React.useContext(FormContext) || undefined;
     const [random, setRandom] = React.useState(0);
+    const [optionVersion, setOptionVersion] = React.useState(0);
 
     useEffect(() => {
-
         const reloadContext = formContext?.getFormFieldReloadListenerContext();
         if (reloadContext) {
             if (formName) {
@@ -21,13 +21,11 @@ export const formFieldInit = (formName?: NamePath, reloadOption?: () => void) =>
         if (optionContext) {
             if (formName) {
                 optionContext.addListener(formName, () => {
-                    if (reloadOption) {
-                        reloadOption();
-                    }
+                    setOptionVersion(Math.random());
                 });
             }
         }
     }, [formContext]);
 
-    return {formContext};
+    return {formContext,optionVersion};
 }

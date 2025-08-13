@@ -23,6 +23,12 @@ const App = () => {
                 >submit</Button>
 
                 <Button
+                    onClick={() => {
+                        leftFormInstance.reloadOptions('select');
+                    }}
+                >options</Button>
+
+                <Button
                     onClick={async () => {
                         const result = await leftFormInstance.validate();
                         if (result) {
@@ -66,11 +72,14 @@ const App = () => {
                     </TableForm.Item>
                     <TableForm.Item label="选择" name="select" span={12}>
                         <FormSelect
-                            options={[
-                                {label: '选项1', value: '1'},
-                                {label: '选项2', value: '2'},
-                                {label: '选项3', value: '3'}
-                            ]}
+                            loadOptions={async ()=>{
+                                console.log('加载选项');
+                                return [
+                                    {label: '选项1', value: '1'},
+                                    {label: '选项2', value: '2'},
+                                    {label: '选项3', value: '3'}
+                                ]
+                            }}
                         />
                     </TableForm.Item>
                 </TableForm>

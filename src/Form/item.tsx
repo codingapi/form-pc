@@ -14,8 +14,13 @@ export const FormItem:React.FC<FormItemRenderProps> = (props)=>{
         props: {
             ...props,
         }
-    }) as React.ReactNode;
-    const {formContext} = formFieldInit(props.name);
+    }) as React.ReactElement;
+
+    const {formContext,optionVersion} = formFieldInit(props.name);
+
+    const children = React.cloneElement(formItem,{
+        optionVersion: optionVersion,
+    });
 
     const rules = loadRules(props);
 
@@ -38,7 +43,7 @@ export const FormItem:React.FC<FormItemRenderProps> = (props)=>{
             hidden={props.hidden}
             rules={rules}
         >
-            {formItem}
+            {children}
         </AntForm.Item>
     )
 }

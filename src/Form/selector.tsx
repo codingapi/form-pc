@@ -70,7 +70,7 @@ export const FormSelector: React.FC<FormTypeProps> = (props) => {
 
     useEffect(() => {
         reloadOptions();
-    }, []);
+    }, [props.optionVersion]);
 
 
     return (

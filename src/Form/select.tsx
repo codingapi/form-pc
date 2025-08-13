@@ -123,7 +123,7 @@ export const FormSelect: React.FC<FormTypeProps> = (props) => {
 
     useEffect(() => {
         reloadOptions();
-    }, []);
+    }, [props.optionVersion]);
 
     return (
         <$Select

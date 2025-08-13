@@ -69,7 +69,7 @@ export const FormCascader: React.FC<FormTypeProps> = (props) => {
 
     useEffect(() => {
         reloadOptions();
-    }, []);
+    }, [props.optionVersion]);
 
 
     return (

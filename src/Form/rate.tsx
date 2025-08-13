@@ -5,17 +5,6 @@ import "./index.scss";
 import {FormContext} from "./context";
 
 export const FormRate: React.FC<FormTypeProps> = (props) => {
-    // const {formContext} = formFieldInit(props);
-    //
-    // useEffect(() => {
-    //     formContext?.addFormField(
-    //         {
-    //             type: 'rate',
-    //             props: props
-    //         }
-    //     );
-    // }, []);
-
     const formContext = useContext(FormContext) || undefined;
 
     return (

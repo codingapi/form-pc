@@ -21,7 +21,7 @@ export const FormCaptcha: React.FC<FormTypeProps> = (props) => {
 
     useEffect(() => {
         reloadCaptcha();
-    }, [])
+    }, [props.optionVersion]);
 
     return (
         <div className={"form-captcha"}>

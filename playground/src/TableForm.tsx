@@ -1,6 +1,6 @@
 import React from "react";
 import {FormInstance, FormRule, loadRules, NamePath} from "@codingapi/ui-framework";
-import {Form, formFieldInit} from "@codingapi/form-pc";
+import {Form} from "@codingapi/form-pc";
 
 interface TableFormProps {
     children: React.ReactNode;
@@ -25,9 +25,7 @@ const TableFormItem: React.FC<TableFormComponentItemProps> = (props) => {
             rules={rules}
             hidden={props.hidden}
         >
-            {React.cloneElement(props.children as any, {
-                style: {width: '100%'},
-            })}
+            {props.children}
         </Form.Item>
     )
 }
@@ -41,24 +39,6 @@ export const TableFormComponent: React.FC<TableFormProps> = (props) => {
     let currentSpan = 0;
 
     items.forEach((item) => {
-        if (React.isValidElement(item.props.children)) {
-            //@ts-ignore
-            const type = item.props.children.type.displayName;
-            const childProps = item.props.children.props;
-
-            const {formContext} = formFieldInit(type);
-
-            formContext?.addFormField(
-                {
-                    type: type,
-                    props: {
-                        ...item.props,
-                        ...childProps,
-                    }
-                }
-            );
-        }
-
         const span = item.props.span || 24;
         if (currentSpan + span > 24) {
             rows.push(currentRow);
